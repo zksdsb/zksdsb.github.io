@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>Markdown学习笔记 | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">Markdown学习笔记</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">June 23, 2024&nbsp;&nbsp;23:02:12</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/Markdown/">Markdown</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h3 id="Markdown简介">Markdown简介</h3>
+<ul>
+<li>
+<p>Markdown 是一种轻量级标记语言，创始人为约翰·格鲁伯（John Gruber）。 它允许人们使用易读易写的纯文本格式编写文档，然后转换成有效的 XHTML（或者HTML）文档。这种语言吸收了很多在电子邮件中已有的纯文本标记的特性。</p>
+</li>
+<li>
+<p>由于 Markdown 的轻量化、易读易写特性，并且对于图片，图表、数学式都有支持，许多网站都广泛使用 Markdown 来撰写帮助文档或是用于论坛上发表消息。 如 GitHub、Reddit、Diaspora、Stack Exchange、OpenStreetMap 、SourceForge、CSDN等，甚至还能被使用来撰写电子书。</p>
+</li>
+</ul>
+<hr>
+<h3 id="平台选择及下载">平台选择及下载</h3>
+<h4 id="1-选择Markdown平台">1.选择Markdown平台</h4>
+<p>Typora 是一个即时渲染，所见即所得的 Markdown 编辑器，这也是与其他 Markdown 编辑器最显著的区别，支持数学公式渲染（通过 MathJax），拼写检查、自定义 CSS 样式，流程图，可与 Word 直接格式转换，同时有 Windows、MacOS 和 GNU/Linux 版本，非常值得使用。</p>
+<h4 id="2-下载并激活Typora">2.下载并激活Typora</h4>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jS411A7vn/?spm_id_from=333.880.my_history.page.click&amp;vd_source=8b6035d67766192a5be73e528944569f/">Typora下载激活教程</a></p>
+<h4 id="3-Typora主要功能">3.Typora主要功能</h4>
+<p>在左下角的源代码模式以及预览模式的切换，十分便捷好用。</p>
+<h3 id="Markdown的使用方法">Markdown的使用方法</h3>
+<h4 id="1-标题">1.标题</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 这是一级标题</span></span><br><span class="line"><span class="section">## 这是二级标题</span></span><br><span class="line"><span class="section">### 这是三级标题</span></span><br><span class="line"><span class="section">#### 这是四级标题</span></span><br><span class="line"><span class="section">##### 这是五级标题</span></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<h1>这是一级标题</h1>
+<h2 id="这是二级标题">这是二级标题</h2>
+<h3 id="这是三级标题">这是三级标题</h3>
+<h4 id="这是四级标题">这是四级标题</h4>
+<h5 id="这是五级标题">这是五级标题</h5>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>最后一个#字符与标题中间要有一个空格</li>
+<li>标题应该置于行首，放在表格里可能无法解析</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="2-字体">2.字体</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">*这是斜体*</span>	</span><br><span class="line"><span class="emphasis">_这是斜体_</span>	</span><br><span class="line"><span class="strong">**这是粗体**</span>	</span><br><span class="line"><span class="strong">__这是粗体__</span>	</span><br><span class="line"><span class="strong">**<span class="emphasis">*这是粗斜体*</span>**</span>	</span><br><span class="line"><span class="strong">__<span class="emphasis">_这是粗斜体_</span>__</span>	</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><em>这是斜体</em>	<br>
+<em>这是斜体</em>	<br>
+<strong>这是粗体</strong>	<br>
+<strong>这是粗体</strong>	<br>
+<em><strong>这是粗斜体</strong></em>	<br>
+<em><strong>这是粗斜体</strong></em></p>
+<blockquote>
+<p>快捷键：</p>
+<p>加粗Ctrl+B</p>
+<p>斜体Ctrl+I</p>
+</blockquote>
+<hr>
+<h4 id="3-换行">3.换行</h4>
+<p>Markdown换行的方式有很多种:</p>
+<ul>
+<li>
+<p>两句话之间加一个空行</p>
+</li>
+<li>
+<p>如果你在编辑的时候，想让一行文字在显示的时候换行，就在中间加<code>&lt;br/&gt;</code></p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这是一句话</span><br><span class="line">这是第二句<span class="language-xml"><span class="tag">&lt;<span class="name">br</span>/&gt;</span></span>这是第三句</span><br></pre></td></tr></table></figure>
+<p>效果：<br>
+这是一句话<br>
+这是第二句<br>这是第三句</p>
+</li>
+</ul>
+<hr>
+<h4 id="4-引用">4.引用</h4>
+<p>Markdown 中引用通过符号 &gt; 来实现。&gt; 符号后的空格，可有可无。<br>
+在引用的区块内，允许换行存在，换行并不会终止引用的区块。如果要结束引用，需要一行空白行，来结束引用的区块。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 这是一个引用</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<blockquote>
+<p>这是一个引用</p>
+</blockquote>
+<blockquote>
+<p>注意：</p>
+<p>1.引用是可以嵌套的</p>
+<p>2.结束引用需要空白行</p>
+<p>3.引用需要放在行首</p>
+<p>4.中间引用时可用代码引用代替</p>
+</blockquote>
+<hr>
+<h4 id="5-链接">5.链接</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">链接名称</span>](<span class="link">链接地址</span>)</span><br><span class="line">&lt;链接地址&gt;</span><br><span class="line">即是：</span><br><span class="line">[<span class="string">这是我的主页</span>](<span class="link">https://zksdsb.github.io/</span>)</span><br><span class="line">或者</span><br><span class="line"><span class="language-xml">&lt;https://zksdsb.github.io/&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><a target="_blank" rel="noopener" href="https://zksdsb.github.io/">这是我的主页</a><br>
+<a target="_blank" rel="noopener" href="https://zksdsb.github.io/">https://zksdsb.github.io/</a></p>
+<hr>
+<h4 id="6-图片">6.图片</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">图片描述，可写可不写，但是中括号要有</span>](<span class="link">图片地址，本地链接或者URL地址。</span>)</span><br><span class="line">比如我此文章的图片：</span><br><span class="line">![<span class="string">这是个图片</span>](<span class="link">https://zksdsb.github.io/image/hollow.jpg</span>)</span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果：<br>
+<img src="https://zksdsb.github.io/image/hollow.jpg" alt="这是个图片"></p>
+<hr>
+<h4 id="7-分割线">7.分割线</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这是分割线</span><br><span class="line"></span><br><span class="line">---</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<hr>
+<blockquote>
+<p>注意：<br>
+分割线的上方要空一行</p>
+</blockquote>
+<hr>
+<h4 id="8-删除线">8.删除线</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~~这是要被删除的文字~~</span><br></pre></td></tr></table></figure>
+<p>效果：<br>
+<s>这是要被删除的文字</s></p>
+<hr>
+<h4 id="9-下划线">9.下划线</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">u</span>&gt;</span></span>这是下划线<span class="language-xml"><span class="tag">&lt;/<span class="name">u</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><u>这是下划线</u></p>
+<hr>
+<h4 id="10-代码块">10.代码块</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">```语言类型</span></span><br><span class="line"><span class="code">一段代码</span></span><br><span class="line"><span class="code">```</span></span><br><span class="line">行内代码<span class="code">`hello`</span> world。这样就可以了</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一段代码</span><br></pre></td></tr></table></figure>
+<p>行内代码<code>hello</code> world。这样就可以了</p>
+<blockquote>
+<p>注意：</p>
+<ul>
+<li>代码块有时也可以当引用使用</li>
+<li>反引号是esc下面那个</li>
+</ul>
+</blockquote>
+<hr>
+<h4 id="11-列表">11.列表</h4>
+<p>列表分为有序列表和无序列表：</p>
+<p>无序列表，使用*、+、-，再加一个空格作为列表的标记<br>
+有序列表，使用数字并加上.号，再加一个空格作为列表的标记</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*</span> 无序列表 1</span><br><span class="line"><span class="bullet">+</span> 无序列表 2</span><br><span class="line"><span class="bullet">-</span> 无序列表 3</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 有序列表 1</span><br><span class="line"><span class="bullet">2.</span> 有序列表 2</span><br><span class="line"><span class="bullet">3.</span> 有序列表 3</span><br></pre></td></tr></table></figure>
+<p>如果想要控制列表的层级，则需要在列表符号前使用Tab</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">+</span> 无序列表 1</span><br><span class="line"><span class="bullet">+</span> 无序列表 2</span><br><span class="line"><span class="bullet">	+</span> 无序列表 2.1</span><br><span class="line"><span class="bullet">	+</span> 无序列表 2.2</span><br><span class="line"></span><br><span class="line"><span class="bullet">1.</span> 有序列表 1</span><br><span class="line"><span class="code">	1.1 有序列表 1.1</span></span><br><span class="line"><span class="code">2. 有序列表 2</span></span><br><span class="line"><span class="code">	2.1 有序列表2.1</span></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<ul>
+<li>无序列表 1</li>
+</ul>
+<ul>
+<li>无序列表 2</li>
+</ul>
+<ul>
+<li>无序列表 3</li>
+</ul>
+<ol>
+<li>有序列表 1</li>
+<li>有序列表 2</li>
+<li>有序列表 3</li>
+</ol>
+<ul>
+<li>无序列表 1</li>
+<li>无序列表 2
+<ul>
+<li>无序列表 2.1</li>
+<li>无序列表 2.2</li>
+</ul>
+</li>
+</ul>
+<ol>
+<li>有序列表 1<br>
+1.1 有序列表 1.1</li>
+<li>有序列表 2<br>
+2.1 有序列表2.1</li>
+</ol>
+<hr>
+<h4 id="12-脚注">12.脚注</h4>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">使用 Markdown[^1]可以效率的书写文档, 直接转换成 HTML[^2], 你可以使用 Typora[^T] 编辑器进行书写。</span><br><span class="line">[<span class="symbol">^1</span>]:<span class="link">Markdown是一种纯文本标记语言</span></span><br><span class="line">[<span class="symbol">^2</span>]:<span class="link">HyperText Markup Language 超文本标记语言</span></span><br><span class="line">[<span class="symbol">^T</span>]:<span class="link">NEW WAY TO READ &amp; WRITE MARKDOWN.</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p>使用 Markdown[^1]可以效率的书写文档, 直接转换成 HTML[^2], 你可以使用 Typora[^T] 编辑器进行书写。<br>
+[^1]:Markdown是一种纯文本标记语言<br>
+[^2]:HyperText Markup Language 超文本标记语言<br>
+[^T]:NEW WAY TO READ &amp; WRITE MARKDOWN.</p>
+<blockquote>
+<p>生成的脚注会在文章最后，点击链接可以跳转</p>
+</blockquote>
+<h3 id="13-特殊符号">13.特殊符号</h3>
+<p>对于语法符号，前面加反斜线</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">\\</span><br><span class="line">\*</span><br><span class="line">\_</span><br><span class="line">\+</span><br><span class="line">\.</span><br><span class="line">等等</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p>\<br>
+*<br>
+_<br>
++<br>
+.<br>
+等等</p>
+<h3 id="以上是Markdown的简单用法，详细用法还要继续学习更新。">以上是Markdown的简单用法，详细用法还要继续学习更新。</h3>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                    <p class="copyright-item">
+                        <span>License:</span>
+                        <span>Copyright (c) 2019 <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a> LICENSE</span>
+                    </p>
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/Markdown/"># Markdown</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/06/23/blog-problem-1/">网页无法显示本地仓库的图片 （一）</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
