@@ -224,15 +224,51 @@
 <li>Hexo是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。即把用户的markdown文件，按照指定的主题解析成静态网页。常见的博客生成工具有两种，一个是hexo,另一个是jekyll。两者其实大同小异，但是jekyll语法和配置相对于复杂，它需要ruby环境。而hexo就比较简单易上手，只需要node环境就ok了。</li>
 <li>使用gitlab搭建个人博客的好处非常多，比如：<br>1.访问速度快，仓库里只需放打包好的静态页面<br>2.构建快，代码push到远程仓库后，分分钟构建完<br>3.免费（当然这是最大的好处）<br>4.易于管理，这得益于github超强的代码管理能力，比如分支，版本回退等<br>5.可以绑定自己的域名</li>
 </ul>
-<p>  </p>
-<h3 id="二、下载必要程序插件"><a href="#二、下载必要程序插件" class="headerlink" title="二、下载必要程序插件"></a>二、下载必要程序插件</h3><h2 id="notejs插件"><a href="#notejs插件" class="headerlink" title="notejs插件"></a>notejs插件</h2><ul>
+<hr>
+<h3 id="二、下载必要程序插件"><a href="#二、下载必要程序插件" class="headerlink" title="二、下载必要程序插件"></a>二、下载必要程序插件</h3><h4 id="notejs插件"><a href="#notejs插件" class="headerlink" title="notejs插件"></a>notejs插件</h4><ul>
 <li>Node.js® 是一个免费、开源、跨平台的 JavaScript 运行时环境，它让开发人员能够创建服务器、Web 应用、命令行工具和脚本。</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn">下载</a></p>
-<h2 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h2><ul>
+<p><a target="_blank" rel="noopener" href="https://nodejs.org/zh-cn/">nodejs下载</a></p>
+<h4 id="Git插件"><a href="#Git插件" class="headerlink" title="Git插件"></a>Git插件</h4><ul>
 <li>Git 是一个免费的开源 分布式版本控制系统，旨在快速高效地处理从小型到大型的所有项目。Git易于学习，占用 空间小，性能快如闪电。它比 Subversion、CVS、Perforce 和 ClearCase 等 SCM 工具更胜一筹，具有廉价的本地分支、方便的暂存区和 多种工作流程等功能。</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="https://git-scm.com/">下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/">Git下载</a></p>
+<h4 id="检查是否安装成功"><a href="#检查是否安装成功" class="headerlink" title="检查是否安装成功"></a>检查是否安装成功</h4><ul>
+<li>鼠标右键桌面任意位置,点Git Bash，出现以下界面，然后输入代码。出现以下版本号提示即安装成功<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git version</span><br><span class="line">node -v</span><br><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+ <img src="C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623110605134.png" alt="image-20240623110605134" style="zoom:80%;" /></li>
+</ul>
+<hr>
+<h3 id="三、用hexo构建本地仓库"><a href="#三、用hexo构建本地仓库" class="headerlink" title="三、用hexo构建本地仓库"></a>三、用hexo构建本地仓库</h3><h4 id="安装并本地运行Hexo"><a href="#安装并本地运行Hexo" class="headerlink" title="安装并本地运行Hexo"></a>安装并本地运行Hexo</h4><p>1.在命令行里输入</p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>2.安装Hexo完成后，在指定文件夹下打开“Git Bash”,再执行下列命令，</p>
+  <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo init myBlog</span><br><span class="line"><span class="built_in">cd</span> myBlog</span><br><span class="line">npm install</span><br></pre></td></tr></table></figure>
+
+<p>  Hexo会在指定文件夹中新建所需要的文件，此文件夹成为博客的本地仓库</p>
+<p>3.之后运行<code>hexo s</code>命令，它会创建一个本地服务器，在浏览器中输入运行网址，即可看到你的本地网站。<br> <img src="C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623111522508.png" alt="image-20240623111522508"></p>
+<p>4.hexo主题官网(<a target="_blank" rel="noopener" href="https://hexo.io/themes/)%EF%BC%8C%E5%8F%AF%E4%BB%A5%E6%A0%B9%E6%8D%AE%E9%9C%80%E6%B1%82%E5%92%8C%E5%96%9C%E5%A5%BD%E9%80%89%E6%8B%A9%E8%87%AA%E5%B7%B1%E5%96%9C%E6%AC%A2%E7%9A%84%E4%B8%BB%E9%A2%98%EF%BC%8C%E6%8A%8A%E8%A7%A3%E5%8E%8B%E5%90%8E%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9%E6%94%BE%E5%88%B0blog%E4%BB%93%E5%BA%93%E9%87%8C%E7%9A%84theme%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%8B%EF%BC%8C%E7%84%B6%E5%90%8E%E9%85%8D%E7%BD%AE_config.yml%E6%96%87%E4%BB%B6%EF%BC%8C%E6%89%BE%E5%88%B0%E6%9C%80%E4%B8%8B%E6%96%B9theme%EF%BC%8C%E5%9C%A8%E5%86%92%E5%8F%B7%E5%90%8E%E8%BE%93%E5%85%A5%E4%BD%A0%E6%94%BE%E5%85%A5%E7%9A%84%E4%B8%BB%E9%A2%98%E5%90%8D%EF%BC%8C%E4%B8%8A%E6%96%B9%E8%BF%98%E6%9C%89%E9%A1%B5%E9%9D%A2%E6%A0%87%E9%A2%98%E4%B8%8E%E4%BD%9C%E8%80%85%E7%9A%84%E4%BF%AE%E6%94%B9%E8%BF%99%E9%87%8C%E4%B8%8D%E5%86%8D%E8%B5%98%E8%BF%B0%E3%80%82%E4%B9%8B%E5%90%8E%E5%9C%A8%E4%B8%8B%E5%A5%BD%E7%9A%84%E4%B8%BB%E9%A2%98%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%9A%84_config.yml%E6%96%87%E4%BB%B6%E4%B8%AD%E8%BF%9B%E8%A1%8C%E7%BB%86%E8%8A%82%E9%85%8D%E7%BD%AE%EF%BC%8C%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95%E9%9C%80%E8%A6%81%E7%9C%8B%E4%B8%BB%E9%A2%98%E4%BD%9C%E8%80%85%E7%9A%84%E5%8D%9A%E5%AE%A2%E6%8C%87%E5%AF%BC![image-20240623112622803](C:/Users/zks/AppData/Roaming/Typora/typora-user-images/image-20240623112622803.png)">https://hexo.io/themes/)，可以根据需求和喜好选择自己喜欢的主题，把解压后的文件夹放到blog仓库里的theme文件夹下，然后配置_config.yml文件，找到最下方theme，在冒号后输入你放入的主题名，上方还有页面标题与作者的修改这里不再赘述。之后在下好的主题文件夹中的_config.yml文件中进行细节配置，具体方法需要看主题作者的博客指导![image-20240623112622803](C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623112622803.png)</a></p>
+<p>5.修改好后在“Git Bash”中生成<code>hexo g</code> ，再执行<code>hexo s</code>，在浏览器中输入本地网址，就能预览修改后的效果了。特别注意，出现报错显示正在运行的，先按ctrl+c退出，然后再进行上述步骤。</p>
+<hr>
+<h3 id="四、将博客部署到Github上"><a href="#四、将博客部署到Github上" class="headerlink" title="四、将博客部署到Github上"></a>四、将博客部署到Github上</h3><p>1.创建自己的一个Github，不再具体说明，这里有稳定访问Github的一些小方法<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_58022371/article/details/126558905">^方法</a><br>2.点击Start project或者下面的 new repository 建立一个新的仓库，注意命名方式一定要是<code>用户名.github.io</code></p>
+<p>3.配置SSH Key,要使用git工具配置,输入以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name&quot;用户名&quot;</span><br><span class="line">git config --global user.email&quot;邮箱地址&quot;</span><br><span class="line">ssh-keygen -t rsa -C&quot;邮箱地址&quot;</span><br></pre></td></tr></table></figure>
+
+<p>敲四下键盘，之后进入文件夹C:\Users\zks.ssh，用任意文本编辑器打开pub文件，全部复制之后打开Github，进入settings，进入SSHkey，添加SSH Key，粘贴刚刚复制的东西，点击创建。</p>
+<p><img src="C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623115210155.png" alt="image-20240623115210155"></p>
+<p>之后用Git Bash输入<code>ssh -T git@github.com</code>,再输入yes。最后在配置文件_config.yml中配置下面三行。</p>
+<p><img src="C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623112622803.png" alt="image-20240623112622803"></p>
+<p>4.在本地博客文件夹中安装hexo-deployer-git部署插件，他是用来将本地文件上传到GitHub上的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>最后执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo g    #生成</span><br><span class="line">hexo d	  #部署</span><br></pre></td></tr></table></figure>
+
+<p>第一次使用需要进行配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email&quot;邮箱地址&quot;</span><br><span class="line">git config --global user.name&quot;用户名&quot;</span><br></pre></td></tr></table></figure>
+
+<p>配置之后再一次上传，这时会弹出登录页面，登录之后，点Authorize</p>
+<p><img src="C:\Users\zks\AppData\Roaming\Typora\typora-user-images\image-20240623120743989.png" alt="image-20240623120743989"></p>
+<p>恭喜你！！！已经完成所有的部署了，之后你或者别人只需要输入你的仓库名，即“命名.github.io”就能进入你的网站了，以后写文章，都可以在本地文件夹修改完成后，在Git bash先<code>hexo g</code>，再<code>hexo d</code>就可以啦。</p>
 
         </div>
 
