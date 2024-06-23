@@ -15,7 +15,7 @@
 
 
 
-<title>Hello World | D调小硕的博客</title>
+<title>用hexo搭建博客遇到的问题及解决方法（一）：网页无法显示本地仓库的图片 | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">Hello World</h1>
+            <h1 class="post-title">用hexo搭建博客遇到的问题及解决方法（一）：网页无法显示本地仓库的图片</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">June 22, 2024&nbsp;&nbsp;12:00:00</a>
+                        Date: <a href="#">June 23, 2024&nbsp;&nbsp;22:08:57</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/Hexo/">Hexo</a>
+                                <a href="/categories/BLOG/">BLOG</a>
                             
                         </span>
                     
@@ -220,20 +220,21 @@
         </header>
 
         <div class="post-content">
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start">Quick Start</h2>
-<h3 id="Create-a-new-post">Create a new post</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server">Run server</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files">Generate static files</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites">Deploy to remote sites</h3>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+            <h2 id="出现问题：无论是本地网站还是网上部署网站，图片无法加载">出现问题：无论是本地网站还是网上部署网站，图片无法加载</h2>
+<h3 id="1-卸载Hexo默认自带的Markdown渲染器">1.卸载Hexo默认自带的Markdown渲染器</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm un hexo-renderer-marked --save</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="2-安装插件">2.安装插件</h3>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-renderer-markdown-it --save</span><br><span class="line">npm install hexo-asset-image</span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="3-更改config-yml配置文件">3.更改config-yml配置文件</h3>
+<p><img src="/2024/06/23/blog-problem-1/1.png" alt="1"></p>
+<hr>
+<h3 id="4-这时候再新建文章就会出现一个同名文件夹">4.这时候再新建文章就会出现一个同名文件夹</h3>
+<p>在同名文件夹里添加图片文件，然后在markdown里输入</p>
+<p><code>！[名字](名字.格式)</code></p>
+<hr>
+<h3 id="问题解决">问题解决!</h3>
 
         </div>
 
@@ -267,7 +268,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/Hexo/"># Hexo</a>
+                        <a href="/tags/BLOG/"># BLOG</a>
+                    
+                        <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"># 问题解决</a>
                     
                         
                 </span>
@@ -280,8 +283,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/06/23/build-blog/">搭建博客平台的方法（hexo+github）</a>
             
+            <a class="next" rel="next" href="/2024/06/23/build-blog/">搭建博客平台的方法（hexo+github）</a>
             
         </section>
 
