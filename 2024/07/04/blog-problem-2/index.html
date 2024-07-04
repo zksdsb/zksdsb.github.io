@@ -15,7 +15,7 @@
 
 
 
-<title>前端学习[2]HTML基本介绍 | D调小硕的博客</title>
+<title>Hexo博客生成错误及解决方案（二） | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">前端学习[2]HTML基本介绍</h1>
+            <h1 class="post-title">Hexo博客生成错误及解决方案（二）</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 4, 2024&nbsp;&nbsp;11:47:22</a>
+                        Date: <a href="#">July 4, 2024&nbsp;&nbsp;11:57:50</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+                                <a href="/categories/BLOG/">BLOG</a>
                             
                         </span>
                     
@@ -220,21 +220,12 @@
         </header>
 
         <div class="post-content">
-            <h1>HTML基本介绍</h1>
+            <h1>出现问题：在编写完文档后，使用指令hexo g生成文档时，出现错误。</h1>
 <ul>
-<li><code>HTML(Hypertext Markup Language)</code> 中文名就是 <code>超文本标记语言</code>，用于创建网页的结构和内容。HTML 是 Web 页面的基础，它描述了页面的语义结构，使浏览器能够正确地显示和解释内容。它使用一系列的标签（也称为元素）来定义文本、图像、链接、表格等在网页上的排布和呈现方式。</li>
+<li>错误代码：YAMLException: can not read a block mapping entry; a multiline key may not be an implicit key at line 5, column 1:</li>
 </ul>
 <hr>
-<h1>HTML文件结构</h1>
-<ul>
-<li>一个HTML文档通常由以下部分组成</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 这里放置文档的元信息 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>文档标题<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 连接外部样式表或脚本文件等 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">type</span>=<span class="string">&quot;text/css&quot;</span> <span class="attr">href</span>=<span class="string">&quot;styles.css&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;script.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这里放置页面内容 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>这是一个标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://www.example.com&quot;</span>&gt;</span>这是一个链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 其他内容 --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><code>&lt;!DOCTYPE html&gt;</code>：声明文档类型为 HTML5。</p>
-<p><code>&lt;html&gt;</code>：HTML 文档的根元素，包含了整个文档的内容。</p>
-<p><code>&lt;head&gt;</code>：包含一些文档的元信息，如标题、字符编码等。</p>
-<p><code>&lt;title&gt;</code>：定义网页标题，会显示在浏览器的标签页上。</p>
-<p><code>&lt;body&gt;</code>：包含实际的页面内容。</p>
+<p>出现问题原因是头部缺少空格，解决方案很简单，只需在 title： date： tags：，后面加上一个空格，然后进行信息输入即可</p>
 
         </div>
 
@@ -265,7 +256,7 @@
                     
                         <a href="/tags/BLOG/"># BLOG</a>
                     
-                        <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"># 前端学习</a>
+                        <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"># 问题解决</a>
                     
                         
                 </span>
@@ -278,10 +269,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/07/04/blog-problem-2/">Hexo博客生成错误及解决方案（二）</a>
             
-            
-            <a class="next" rel="next" href="/2024/07/04/%E5%89%8D%E7%AB%AF/">前端学习[1]搭建环境</a>
+            <a class="next" rel="next" href="/2024/07/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-2-HTML%E5%9F%BA%E6%9C%AC%E4%BB%8B%E7%BB%8D/">前端学习[2]HTML基本介绍</a>
             
         </section>
 
