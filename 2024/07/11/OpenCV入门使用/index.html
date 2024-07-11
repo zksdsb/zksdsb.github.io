@@ -294,55 +294,88 @@
 <p>效果：</p>
 <p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p6.png" alt="p6"></p>
 <h1>五、均值滤波器处理噪点</h1>
+<blockquote>
+<p>需要先用numpy创建一个方阵内核，内核越小处理越精细</p>
+</blockquote>
 <ol>
 <li>高斯滤波器</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">image = cv2.imread(<span class="string">&quot;plane.jpg&quot;</span>)</span><br><span class="line">gauss = cv2.GaussianBlur(image, (<span class="number">5</span>, <span class="number">5</span>), <span class="number">0</span>)</span><br><span class="line">kernel = np.ones((<span class="number">5</span>, <span class="number">5</span>), np.uint8)</span><br><span class="line">cv2.imshow(<span class="string">&quot;gauss&quot;</span>, gauss)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<ol start="2">
 <li>均值滤波器</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">median = cv2.medianBlur(image, <span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>显示效果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p7.png" alt="p7"></p>
 <h1>六、图像特征提取</h1>
 <ol>
 <li>寻找特征点</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br><span class="line">corners = cv2.goodFeaturesToTrack(gray, <span class="number">500</span>, <span class="number">0.1</span>, <span class="number">10</span>)</span><br><span class="line"><span class="keyword">for</span> corner <span class="keyword">in</span> corners:</span><br><span class="line">    x, y = corner.ravel()</span><br><span class="line">    cv2.circle(image, (<span class="built_in">int</span>(x), <span class="built_in">int</span>(y)), <span class="number">3</span>, (<span class="number">255</span>, <span class="number">0</span>, <span class="number">255</span>), -<span class="number">1</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;corners&quot;</span>, image)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>找到转角</p>
 </blockquote>
+<p>显示效果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p8.png" alt="p8"></p>
 <h1>七、图像寻找匹配</h1>
 <ol>
 <li>设置匹配模版</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">image = cv2.imread(<span class="string">&quot;poker.jpg&quot;</span>)</span><br><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)</span><br><span class="line">tem = gray[<span class="number">70</span>:<span class="number">100</span>, <span class="number">235</span>:<span class="number">270</span>]</span><br></pre></td></tr></table></figure>
+<ol start="2">
 <li>标准化算法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">match</span> = cv2.matchTemplate(gray, tem, cv2.TM_CCOEFF_NORMED)</span><br></pre></td></tr></table></figure>
+<ol start="3">
 <li>用边框画出匹配图像</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">locations = np.where(<span class="keyword">match</span> &gt;= <span class="number">0.9</span>)</span><br><span class="line">w, h = tem.shape[<span class="number">0</span>:<span class="number">2</span>]</span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> <span class="built_in">zip</span>(*locations[::-<span class="number">1</span>]):</span><br><span class="line">    x1, y1 = p[<span class="number">0</span>], p[<span class="number">1</span>]</span><br><span class="line">    x2, y2 = x1 + w, y1 + h</span><br><span class="line">    cv2.rectangle(image, (x1, y1), (x2, y2), (<span class="number">0</span>, <span class="number">255</span>, <span class="number">0</span>), <span class="number">2</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;image&quot;</span>, image)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p9.png" alt="p9"></p>
 <h1>八、图像梯度算法</h1>
 <ul>
 <li>指图像的明暗变化，可以用数学理解</li>
 </ul>
 <ol>
 <li>拉普拉斯算子处理边缘</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">gray = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>, cv2.IMREAD_GRAYSCALE)</span><br><span class="line"></span><br><span class="line">lap = cv2.Laplacian(gray, cv2.CV_64F)</span><br></pre></td></tr></table></figure>
+<ol start="2">
 <li>canny边缘检测</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">canny = cv2.Canny(gray, <span class="number">100</span>, <span class="number">200</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;gray&quot;</span>, gray)</span><br><span class="line">cv2.imshow(<span class="string">&quot;lap&quot;</span>, lap)</span><br><span class="line">cv2.imshow(<span class="string">&quot;canny&quot;</span>, canny)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>将梯度与设置阈值比较</p>
 </blockquote>
+<p>效果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p10.png" alt="p10"></p>
 <h1>九、阈值算法</h1>
 <ul>
 <li>非黑即白的算法</li>
 </ul>
 <ol>
 <li>定义一个固定阈值</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">gray = cv2.imread(<span class="string">&quot;bookpage.jpg&quot;</span>, cv2.IMREAD_GRAYSCALE)</span><br><span class="line">ret, binary = cv2.threshold(gray, <span class="number">10</span>, <span class="number">255</span>, cv2.THRESH_BINARY)</span><br></pre></td></tr></table></figure>
+<ol start="2">
 <li>自适应阈值算法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binary_adaptive = cv2.adaptiveThreshold(gray, <span class="number">255</span>, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, <span class="number">115</span>, <span class="number">1</span>)</span><br></pre></td></tr></table></figure>
+<ol start="3">
 <li>大金算法</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ret1, binary_otsu = cv2.threshold(gray, <span class="number">0</span>, <span class="number">255</span>, cv2.THRESH_OTSU+cv2.THRESH_BINARY)</span><br><span class="line">cv2.imshow(<span class="string">&quot;gray&quot;</span>, gray)</span><br><span class="line">cv2.imshow(<span class="string">&quot;binary&quot;</span>, binary)</span><br><span class="line">cv2.imshow(<span class="string">&quot;otsu&quot;</span>, binary_otsu)</span><br><span class="line">cv2.imshow(<span class="string">&quot;auto-binary&quot;</span>, binary_adaptive)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p>效果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p11.png" alt="p11"></p>
 <h1>十、形态学算法</h1>
 <ol>
-<li>腐蚀算法</li>
+<li>腐蚀与膨胀算法</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">gray = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>, cv2.IMREAD_GRAYSCALE)</span><br><span class="line">ret, binary_reserve = cv2.threshold(gray, <span class="number">200</span>, <span class="number">255</span>, cv2.THRESH_BINARY_INV)</span><br><span class="line">ret1, binary = cv2.threshold(gray, <span class="number">200</span>, <span class="number">255</span>, cv2.THRESH_BINARY)</span><br><span class="line">kernel = np.ones((<span class="number">5</span>, <span class="number">5</span>), np.uint8)</span><br><span class="line">erosion = cv2.erode(binary_reserve, kernel)</span><br><span class="line">dilation = cv2.dilate(binary_reserve, kernel)</span><br><span class="line">cv2.imshow(<span class="string">&quot;erosion&quot;</span>, erosion)</span><br><span class="line">cv2.imshow(<span class="string">&quot;normal&quot;</span>, binary)</span><br><span class="line">cv2.imshow(<span class="string">&quot;reserval&quot;</span>, binary_reserve)</span><br><span class="line">cv2.imshow(<span class="string">&quot;dilation&quot;</span>, dilation)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>需要先创建一个腐蚀盒子</p>
+<p>需要先创建一个盒子</p>
 </blockquote>
-<ol start="2">
-<li>膨胀算法</li>
-</ol>
-<h1>十一、调用电脑摄像头</h1>
+<p>效果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p12.png" alt="p12"></p>
 
         </div>
 
