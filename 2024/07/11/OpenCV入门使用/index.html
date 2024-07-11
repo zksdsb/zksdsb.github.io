@@ -15,7 +15,7 @@
 
 
 
-<title>前端学习[4]HTML其它标签以及属性 | D调小硕的博客</title>
+<title>OpenCV入门使用 | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">前端学习[4]HTML其它标签以及属性</h1>
+            <h1 class="post-title">OpenCV入门使用</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 4, 2024&nbsp;&nbsp;22:15:30</a>
+                        Date: <a href="#">July 11, 2024&nbsp;&nbsp;10:44:22</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
+                                <a href="/categories/OpenCV/">OpenCV</a>
                             
                         </span>
                     
@@ -220,52 +220,123 @@
         </header>
 
         <div class="post-content">
-            <h1>前言</h1>
-<ul>
-<li>基本语法</li>
-</ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">开始标签</span> <span class="attr">属性名</span>=<span class="string">&quot;属性值&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>每个HTML元素可以有不同的属性</li>
-<li>属性名称不区分大小写，属性值对大小写敏感</li>
-</ul>
-<hr>
-<h1>用于放置链接的a标签</h1>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;https://zksdsb.github.io/&quot;</span>&gt;</span>这是一个超链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br>
-<a target="_blank" rel="noopener" href="https://zksdsb.github.io/">这是一个超链接</a></p>
-<h2 id="a标签作为超链接标签，具有多个属性">a标签作为超链接标签，具有多个属性</h2>
+            <h1>OpenCV 入门使用</h1>
+<h2 id="一、基本图像导入、显示和导出操作">一、基本图像导入、显示和导出操作</h2>
 <ol>
-<li>href：用于指定链接的目标URL地址，可以是绝对或相对地址。这是a标签最基本和最重要的属性，它定义了链接指向的资源位置</li>
-<li>target：用于指定链接如何打开。这个属性可以有以下几个值：<br>
-_blank：在新窗口或标签页中打开链接。<br>
-_self：默认值，在当前窗口或标签页中打开链接。<br>
-_parent：在父框架中打开链接。<br>
-_top：在整个窗口或标签页中打开链接，不在任何框架中。</li>
-<li>以上是最常用的几个属性，其它还有rel，download，hreflang，hreflang等属性，可以自行探索使用。</li>
+<li>图像导入的方法</li>
 </ol>
-<hr>
-<h1>用于换行的标签</h1>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">这样可以换行<span class="tag">&lt;<span class="name">br</span>&gt;</span>这样可以换行</span><br><span class="line">或者换两行<span class="tag">&lt;<span class="name">br</span>&gt;</span>或者换两行</span><br></pre></td></tr></table></figure>
-<p>效果：<br>
-这样可以换行<br>这样可以换行<br>
-或者换两行<br><br>或者换两行</p>
-<hr>
-<h1>分割线标签</h1>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(image.shape)</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>显示结果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p1.png" alt="P1"><br>
+可以看到，结果输出了255，255，0，前二者代表横行与纵列像素，后者是颜色分成三原色</p>
+<ol start="2">
+<li>图像显示的方法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"></span><br><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line"></span><br><span class="line">cv2.imshow(<span class="string">&quot;image&quot;</span>, image)</span><br><span class="line"></span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
+<p>显示结果：<br>
+<img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p2.png" alt="P2"></p>
+<ol start="3">
+<li>图像保存的方法</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line">cv2.imwrite(路径, img)</span><br></pre></td></tr></table></figure>
 <p>效果：</p>
-<hr>
-<hr>
-<h1>图片img标签</h1>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;hollow.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;hollow&quot;</span><span class="attr">width</span>=<span class="string">&quot;200&quot;</span><span class="attr">height</span>=<span class="string">&quot;200&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>效果：<br>
-<img src="/2024/07/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-4-HTML%E5%85%B6%E5%AE%83%E6%A0%87%E7%AD%BE%E4%BB%A5%E5%8F%8A%E5%B1%9E%E6%80%A7/hollow.jpg" alt="hollow" width="200" height="200"></p>
-<h2 id="常用属性">常用属性</h2>
+<p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p3.png" alt="p3"></p>
+<h1>二、图像的彩色通道</h1>
+<ul>
+<li>任何颜色都是由RBG混合而成的，而OpenCV的存储顺序为BGR，与常规顺序相反</li>
+<li>在渲染图像时，计算机首先会分析图像红绿蓝的灰度图，然后将其投影到红绿蓝的LED芯片上</li>
+</ul>
 <ol>
-<li>src：这是最重要的属性，用于指定图像文件的路径。。</li>
-<li>alt：这个属性用于提供图像的替代文本，通常在图像无法加载或者用户使用辅助技术（如屏幕阅读器）时显示。</li>
-<li>width 和 height：这些属性用于指定图像的宽度和高度，以像素为单位。</li>
+<li>显示三色灰度图的方法</li>
 </ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imashow()</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>三个通道图像做平方和加权平均的灰度图像</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>实际上，它描述图案的明暗分布，它代表了相机CMOS芯片上接收的光子数量，大量的图像算法都是基于灰度图</p>
+</blockquote>
+<h1>三、图像的裁剪</h1>
+<ol>
+<li>对图像进行裁剪</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>先横行，后纵列</p>
+</blockquote>
+<h1>四、绘制功能</h1>
+<h2 id="需要先引入numpy工具包">需要先引入numpy工具包</h2>
+<ol>
+<li>创建黑色画布</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.zeros([<span class="number">300</span>, <span class="number">300</span>, <span class="number">3</span>], dtype=np.uint8)</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>画线</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.line()</span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>画矩形框</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.rectangle()</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>画圆形</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.circle</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>画字体</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.putText()</span><br></pre></td></tr></table></figure>
+<h1>五、均值滤波器处理噪点</h1>
+<ol>
+<li>高斯滤波器</li>
+<li>均值滤波器</li>
+</ol>
+<h1>六、图像特征提取</h1>
+<ol>
+<li>寻找特征点</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>找到转角</p>
+</blockquote>
+<h1>七、图像寻找匹配</h1>
+<ol>
+<li>设置匹配模版</li>
+<li>标准化算法</li>
+<li>用边框画出匹配图像</li>
+</ol>
+<h1>八、图像梯度算法</h1>
+<ul>
+<li>指图像的明暗变化，可以用数学理解</li>
+</ul>
+<ol>
+<li>拉普拉斯算子处理边缘</li>
+<li>canny边缘检测</li>
+</ol>
+<blockquote>
+<p>将梯度与设置阈值比较</p>
+</blockquote>
+<h1>九、阈值算法</h1>
+<ul>
+<li>非黑即白的算法</li>
+</ul>
+<ol>
+<li>定义一个固定阈值</li>
+<li>自适应阈值算法</li>
+<li>大金算法</li>
+</ol>
+<h1>十、形态学算法</h1>
+<ol>
+<li>腐蚀算法</li>
+</ol>
+<blockquote>
+<p>需要先创建一个腐蚀盒子</p>
+</blockquote>
+<ol start="2">
+<li>膨胀算法</li>
+</ol>
+<h1>十一、调用电脑摄像头</h1>
 
         </div>
 
@@ -294,9 +365,7 @@ _top：在整个窗口或标签页中打开链接，不在任何框架中。</li
                 <span class="tag">
                     
                     
-                        <a href="/tags/BLOG/"># BLOG</a>
-                    
-                        <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"># 前端学习</a>
+                        <a href="/tags/OpenCV/"># OpenCV</a>
                     
                         
                 </span>
@@ -309,10 +378,8 @@ _top：在整个窗口或标签页中打开链接，不在任何框架中。</li
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/">OpenCV入门使用</a>
             
-            
-            <a class="next" rel="next" href="/2024/07/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-3-HTML%E5%B8%B8%E7%94%A8%E6%A0%87%E7%AD%BE/">前端学习[3]HTML常用标签</a>
+            <a class="next" rel="next" href="/2024/07/04/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-4-HTML%E5%85%B6%E5%AE%83%E6%A0%87%E7%AD%BE%E4%BB%A5%E5%8F%8A%E5%B1%9E%E6%80%A7/">前端学习[4]HTML其它标签以及属性</a>
             
         </section>
 
