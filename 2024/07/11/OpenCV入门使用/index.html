@@ -249,44 +249,50 @@
 <ol>
 <li>显示三色灰度图的方法</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.imashow()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line">cv2.imshow(<span class="string">&quot;blue&quot;</span>, image[:, :, <span class="number">0</span>])</span><br><span class="line">cv2.imshow(<span class="string">&quot;green&quot;</span>, image[:, :, <span class="number">1</span>])</span><br><span class="line">cv2.imshow(<span class="string">&quot;red&quot;</span>, image[:, :, <span class="number">2</span>])</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>三个通道图像做平方和加权平均的灰度图像</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>实际上，它描述图案的明暗分布，它代表了相机CMOS芯片上接收的光子数量，大量的图像算法都是基于灰度图</p>
 </blockquote>
+<p>效果：</p>
+<p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p4.jpg" alt="p4"></p>
 <h1>三、图像的裁剪</h1>
 <ol>
 <li>对图像进行裁剪</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line">image = cv2.imread(<span class="string">&quot;opencv_logo.jpg&quot;</span>)</span><br><span class="line">crop = image[<span class="number">10</span>:<span class="number">170</span>, <span class="number">40</span>:<span class="number">200</span>]</span><br><span class="line">image2 = cv2.imread(<span class="string">&quot;poker.jpg&quot;</span>)</span><br><span class="line">crop2 = image2[<span class="number">70</span>:<span class="number">105</span>, <span class="number">235</span>:<span class="number">265</span>]</span><br><span class="line">cv2.imshow(<span class="string">&quot;crop&quot;</span>, crop)</span><br><span class="line">cv2.imshow(<span class="string">&quot;crop2&quot;</span>, crop2)</span><br><span class="line">cv2.waitKey()</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>先横行，后纵列</p>
 </blockquote>
+<p>显示效果：</p>
+<p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p5.jpg" alt="p5"></p>
 <h1>四、绘制功能</h1>
 <h2 id="需要先引入numpy工具包">需要先引入numpy工具包</h2>
 <ol>
 <li>创建黑色画布</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">np.zeros([<span class="number">300</span>, <span class="number">300</span>, <span class="number">3</span>], dtype=np.uint8)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> cv2</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">image = np.zeros([<span class="number">300</span>, <span class="number">300</span>, <span class="number">3</span>], dtype=np.uint8)</span><br></pre></td></tr></table></figure>
 <ol start="2">
 <li>画线</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.line()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.line(image, begin(x,y), end(x,y), color(B,G,R), thicknerss)</span><br></pre></td></tr></table></figure>
 <ol start="3">
 <li>画矩形框</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.rectangle()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.rectangle(image, begin(x,y), end(x,y), color(B,G,R),thickness)</span><br></pre></td></tr></table></figure>
 <ol start="4">
 <li>画圆形</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.circle</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.circle(image, center(x, y), radius, (B, G, R), thickness)</span><br></pre></td></tr></table></figure>
 <ol start="5">
 <li>画字体</li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.putText()</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cv2.putText(image, <span class="string">&quot;hello&quot;</span>, begin(x, y), 字体, 大小, (B, G, R), 厚度, 线型)</span><br></pre></td></tr></table></figure>
+<p>效果：</p>
+<p><img src="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/p6.png" alt="p6"></p>
 <h1>五、均值滤波器处理噪点</h1>
 <ol>
 <li>高斯滤波器</li>
