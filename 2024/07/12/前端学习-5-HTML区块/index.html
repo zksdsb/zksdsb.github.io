@@ -15,7 +15,7 @@
 
 
 
-<title>OpenCV简介 | D调小硕的博客</title>
+<title>前端学习-5-HTML区块 | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">OpenCV简介</h1>
+            <h1 class="post-title">前端学习-5-HTML区块</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 12, 2024&nbsp;&nbsp;10:56:48</a>
+                        Date: <a href="#">July 12, 2024&nbsp;&nbsp;11:42:21</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/OpenCV/">OpenCV</a>
+                                <a href="/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/">前端学习</a>
                             
                         </span>
                     
@@ -220,19 +220,54 @@
         </header>
 
         <div class="post-content">
-            <h1>OpenCV 简介</h1>
+            <h1>前言</h1>
+<p>在HTML元素中在浏览器中显示是独占一行的，而有些元素则不是。</p>
 <ul>
-<li>OpenCV 是一个轻量、高效、开源。最广泛使用的计算机视觉工具，可以快速对图像进行处理。</li>
+<li>
+<p>块元素：通常用于组织和布置页面的主要结构和内容，例如段落，标题，表格等。他们用于创建页面的主要部分，将内容分割成逻辑块</p>
+</li>
+<li>
+<p>可以包涵其他的块级元素和行内元素</p>
+</li>
+<li>
+<p>常见块级元素包括：<code>&lt;div&gt;</code>,<code>&lt;p&gt;</code>,<code>&lt;h1&gt;</code>,<code>&lt;ul&gt;</code>,<code>&lt;ol&gt;</code>,<code>&lt;li&gt;</code>,<code>&lt;table&gt;</code>,<code>&lt;form&gt;</code></p>
+</li>
+<li>
+<p>行内元素：通常用于添加文本样式或为文本中的一部分应用样式、他们可以在文本中插入小的元素，例如超链接，强调文本，图片等等</p>
+</li>
+<li>
+<p>行内元素通常在同一行呈现</p>
+</li>
+<li>
+<p>他们只占据内容所需的宽度而不是整行的宽度</p>
+</li>
+<li>
+<p>行内元素不能包含块级元素，只能包涵其他行内元素</p>
+</li>
+<li>
+<p>常见行内元素包括：<br>
+<code>&lt;span&gt;</code>,<code>&lt;a&gt;</code>,<code>&lt;strong&gt;</code>,<code>&lt;em&gt;</code>,<code>&lt;img&gt;</code>,<code>&lt;br&gt;</code>,<code>&lt;input&gt;</code>等</p>
+</li>
 </ul>
-<hr>
-<h1>OpenCV 环境搭建</h1>
+<h1>块级标签</h1>
+<h2 id="div-标签"><div>标签</div></h2>
+<p>没有特定语义，可以用于创建一个包含其他HTML元素的容器块，仅用于组织内容，可以创建布局结构，比如导航栏，侧边栏，内容主体</p>
 <ol>
-<li>安装python软件.<a target="_blank" rel="noopener" href="https://www.python.org">下载地址</a>注意：安装时需要添加路径PYTH到windows环境</li>
-<li>安装PyCharm软件.<a target="_blank" rel="noopener" href="https://www.jetbrains.com/pycharm/download/?section=windows">下载地址</a>安装完成后，他会让我们进行一些基础设置</li>
-<li>下载安装OpenCV工具包，在cmd命令行中输入pip install opencv-python，就可以使用pip直接安装最新的库了。</li>
+<li>创建一个简单导航栏，并且标志为&quot;nav&quot;类</li>
 </ol>
-<h2 id="环境搭载完毕">环境搭载完毕</h2>
-
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;nav&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>链接1<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>链接2<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>链接3<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>链接4<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;&quot;</span>&gt;</span>链接5<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里有快捷键： div.nav  创建一个类为&quot;nav&quot;的div块<br>
+div#nav 创建一个id为&quot;nav&quot;的div块</p>
+</blockquote>
+<ol start="2">
+<li>创建一个内容类</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h1</span>&gt;</span>文章标题<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>文章内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1>行内元素</h1>
+<h2 id="span-标签"><span>标签</span></h2>
+<p>把一小部分文本包装起来在html中，span标签是使用来组合文档中的行内元素，以便使用样式来对它们进行格式化。span标签本身并没有什么格式表现（比如：换行等），需要对它应用样式才会有视觉上的变化。span标签通常使用来将文本的一部分或者文档的一部分独立出来，从而对独立出来的内容设置单独的样式。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">span</span>&gt;</span>这是第1个span标签<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是第2个span标签<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是第3个span标签<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>这是第4个span标签<span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">span</span>&gt;</span>链接点击这里<span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#&quot;</span>&gt;</span>链接<span class="tag">&lt;/<span class="name">a</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span><br></pre></td></tr></table></figure>
         </div>
 
         
@@ -260,7 +295,9 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/OpenCV/"># OpenCV</a>
+                        <a href="/tags/BLOG/"># BLOG</a>
+                    
+                        <a href="/tags/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"># 前端学习</a>
                     
                         
                 </span>
@@ -273,10 +310,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/07/12/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-5-HTML%E5%8C%BA%E5%9D%97/">前端学习-5-HTML区块</a>
+                <a class="prev" rel="prev" href="/2024/07/12/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-6-HTML%E8%A1%A8%E5%8D%95/">前端学习-6-HTML表单</a>
             
             
-            <a class="next" rel="next" href="/2024/07/11/OpenCV%E5%85%A5%E9%97%A8%E4%BD%BF%E7%94%A8/">OpenCV入门使用</a>
+            <a class="next" rel="next" href="/2024/07/12/OpenCV%E7%AE%80%E4%BB%8B/">OpenCV简介</a>
             
         </section>
 
