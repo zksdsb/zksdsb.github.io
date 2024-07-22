@@ -15,7 +15,7 @@
 
 
 
-<title>解决Xilinx ISE在win10上的兼容性问题 | D调小硕的博客</title>
+<title>STM32标准库移植HAL库教程 | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">解决Xilinx ISE在win10上的兼容性问题</h1>
+            <h1 class="post-title">STM32标准库移植HAL库教程</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">July 14, 2024&nbsp;&nbsp;23:33:50</a>
+                        Date: <a href="#">July 22, 2024&nbsp;&nbsp;14:02:50</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/%E7%94%B5%E8%84%91%E6%95%85%E9%9A%9C%E8%A7%A3%E5%86%B3/">电脑故障解决</a>
+                                <a href="/categories/STM32%E5%AD%A6%E4%B9%A0/">STM32学习</a>
                             
                         </span>
                     
@@ -220,8 +220,63 @@
         </header>
 
         <div class="post-content">
-            <h1>解决Xilinx ISE在win10上的兼容性问题</h1>
-<p>参考文章：<a target="_blank" rel="noopener" href="https://blog.csdn.net/u012254599/article/details/136286426?ops_request_misc=%25257B%252522request%25255Fid%252522%25253A%252522172092607516800180689650%252522%25252C%252522scm%252522%25253A%25252220140713.130102334..%252522%25257D&amp;request_id=172092607516800180689650&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-136286426-null-null.142%5Ev100%5Epc_search_result_base9&amp;utm_term=ise14.7%25E4%25B8%258B%25E8%25BD%25BD%25E5%25AE%2589%25E8%25A3%2585win10&amp;spm=1018.2226.3001.4187">CSDN在win10上安装ISE</a></p>
+            <h1>STM32标准库代码丝滑移植到HAL库</h1>
+<ul>
+<li>前言：HAL库在配置引脚，初始化通信协议，外部中断，定时器等都十分方便，然而许多代码程序还有各种硬件驱动示例往往是标准库使用的比较多，因此如何从HAL库移植到标准库也就成了一门进阶的必修课</li>
+</ul>
+<h2 id="以STM32F407ZET6为例，移植TFTLCD显示屏的驱动代码">以STM32F407ZET6为例，移植TFTLCD显示屏的驱动代码</h2>
+<h3 id="1-获取TFT显示屏的驱动代码，这一步我们可以直接从淘宝店铺中获得，往往他们会发给我们网盘资料，并且这时驱动和大小都是对应的，十分方便。也可以从B站，CSDN等多个网站上获取">1. 获取TFT显示屏的驱动代码，这一步我们可以直接从淘宝店铺中获得，往往他们会发给我们网盘资料，并且这时驱动和大小都是对应的，十分方便。也可以从B站，CSDN等多个网站上获取</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p1.jpg" alt="p1"></p>
+<h3 id="2-打开驱动代码，查看引脚配置，并且进行烧录查看是否可用。">2. 打开驱动代码，查看引脚配置，并且进行烧录查看是否可用。</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p2.png" alt="p2"><br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p3.jpg" alt="p3"></p>
+<h3 id="接下来我们开始激动人心的移植，首先需要注意，每一个驱动或者代码的移植都是不一样的，有的容易移植，有的难移植，但总体思路就是把初始化函数用HAL库写好，其余复制，然后就是减少error的过程了">接下来我们开始激动人心的移植，首先需要注意，每一个驱动或者代码的移植都是不一样的，有的容易移植，有的难移植，但总体思路就是把初始化函数用HAL库写好，其余复制，然后就是减少error的过程了</h3>
+<h3 id="3-将原来的引脚配置用HAL库进行复刻">3. 将原来的引脚配置用HAL库进行复刻</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p4.png" alt="p4"><br>
+可以看到，标准库中的引脚配置是将 G12 D1 D4 D5 D15 E8 E10全部配置为普通输出模式、推挽输出、100MHZ速度、上拉、初始高电平<br>
+我们需要在hal库中进行重现<br>
+系统配置：防止自锁<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p5.png" alt="p5"><br>
+时钟配置：<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p6.png" alt="p6"><br>
+GPIO配置：<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p7.png" alt="p7"><br>
+生成工程：<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p8.png" alt="p8"><br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p9.png" alt="p9"></p>
+<h3 id="4-在工程中生成组，把所有需要copy的标准库文件放在里面">4. 在工程中生成组，把所有需要copy的标准库文件放在里面</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p10.png" alt="p10"><br>
+之后我们尝试编译一下，发现有两个error：没找到sys.h文件<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p11.png" alt="p11"><br>
+所以我们在把sys.c和.h添加进来并且之前漏了一步，需要包含新的文件夹路径<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p12.png" alt="p12"><br>
+最后惊喜的发现error变成42个<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p13.png" alt="p13"></p>
+<h3 id="5-把error减少到0为止">5. 把error减少到0为止</h3>
+<h5 id="1、u8-u16-u32找不到">1、u8 u16 u32找不到</h5>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p14.png" alt="p14"><br>
+这里我们直接用uint8_t等切换<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p15.png" alt="p15"></p>
+<h5 id="2、找不到delay">2、找不到delay</h5>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p16.png" alt="p16"><br>
+加进去delay即可</p>
+<h5 id="3、去掉引脚配置的初始化函数">3、去掉引脚配置的初始化函数</h5>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p17.png" alt="p17"></p>
+<h5 id="4、函数改写">4、函数改写</h5>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p18.png" alt="p18"><br>
+用HAL库中的函数替代标准库中的函数</p>
+<h5 id="5、系统时钟文件冲突">5、系统时钟文件冲突</h5>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p19.png" alt="p19"><br>
+我们用hal库自带的系统时钟配置<br>
+<img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p20.png" alt="p20"></p>
+<h3 id="6-接下来我们尝试把头文件包含在主函数中">6. 接下来我们尝试把头文件包含在主函数中</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p21.png" alt="p21"><br>
+发现error仍然为零，我们可以调动函数试试了</p>
+<h3 id="7-main-c启动，烧录">7. main.c启动，烧录</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p22.png" alt="p22"></p>
+<h3 id="移植成功！！！">移植成功！！！</h3>
+<p><img src="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/p23.png" alt="p23"><br>
+以后我们就可以轻松愉快的在HAL库中使用了</p>
 
         </div>
 
@@ -252,6 +307,8 @@
                     
                         <a href="/tags/%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/"># 问题解决</a>
                     
+                        <a href="/tags/STM32/"># STM32</a>
+                    
                         
                 </span>
             </div>
@@ -263,10 +320,8 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/07/22/Verilog%E4%BB%8B%E7%BB%8D/">Verilog介绍</a>
             
-            
-            <a class="next" rel="next" href="/2024/07/14/%E8%A7%A3%E5%86%B3CentOS7%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E9%97%AE%E9%A2%98/">解决CentOS7环境配置问题</a>
+            <a class="next" rel="next" href="/2024/07/22/%E6%9A%91%E5%81%87%E5%9F%B9%E8%AE%AD%E7%8F%AD%E6%95%B0%E5%AD%97%E9%83%A8%E5%88%86/">暑假培训班数字部分</a>
             
         </section>
 
