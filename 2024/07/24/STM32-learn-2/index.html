@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>PID算法入门学习（速度环） | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">PID算法入门学习（速度环）</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">July 24, 2024&nbsp;&nbsp;9:32:16</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E5%AD%A6%E4%B9%A0/">STM32学习</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>PID算法入门学习（速度环）</h1>
+<h2 id="一、PID是什么">一、PID是什么</h2>
+<p>PID其本质上是一种闭环算法（即负反馈算法），为了使输出稳定，我们往往会引入负反馈，因为负反馈会使输出趋于稳态，</p>
+<p><img src="/2024/07/24/STM32-learn-2/p1.png" alt="p1"></p>
+<ul>
+<li>例如常见的PWM驱动电机，我们赋予的PWM值只会改变电机驱动的动力，而不是给予固定速度，如果地面状况发生变化，那么速度必然会受到影响。</li>
+<li>假设平坦路面上小车行驶1m/s的速度，我们这时提供的PWM占空比为50%，当小车遇到斜坡时，我们如果保持PWM不变，那么速度必然减小，这时我们就需要传感器读取小车当前的速度假设到了0.8m/s，并且通过算法将这一速度值进行处理，使速度再次达到我们的预设值，比如这时PID反馈的值是让PWM变大变为60%，我们的速度自然才有可能恢复1m/s。</li>
+</ul>
+<h2 id="二、PID的实际运用">二、PID的实际运用</h2>
+<p>生活中加热台，温控枪，还有水位保持等等都需要用到PID。</p>
+<blockquote>
+<p>需要注意的是空调这种不算是PID，因为他的输出是离散的，假设我们设定温度是26，而室温是30，他会保持均匀的冷风，像这种输出不是连续变化的不是PID。</p>
+</blockquote>
+<h2 id="三、PID的数学表达式以及含义">三、PID的数学表达式以及含义</h2>
+<p><img src="/2024/07/24/STM32-learn-2/p2.png" alt="p2"></p>
+<p>可以看到PID算法的名字就在这表达式中最关键的三个系数上，PID算法全称是Proportional Integral Derivative算法，直译就是比例的，积分的，微分的算法，实际上我们从他的连续形式和离散形式上也能看出端倪，他的三个部分分别就是：</p>
+<ol>
+<li>P：比例部分</li>
+<li>I：积分部分</li>
+<li>D: 微分部分</li>
+</ol>
+<p>下面我们也从三方面分别分析，然后进行综合。</p>
+<h3 id="P：比例部分">P：比例部分</h3>
+<p>上述公式看起来很复杂，其实理解起来非常的简单。首先我们需要理解e的概念，它指的就是我们的实际值距离预设值的误差，注意这里是要带正负号的，并不取绝对值。</p>
+<p>还是以飞控的例子来说明：比如我预设飞控悬停的高度是是100m，而实际刚开始的高度是0m，那么显然刚开始我们Kp*e的部分是很大的，那么也就意味这刚开始我们提供的加速度或者说是力很大，当我们的高度接近预设值时，e减小了，也就是P的部分减小了，那么我们提供的加速度就会相应的减小。这样是不是就意味着我们在相对平滑的去接近目标值了。然而即使如此，我们在到达99m时，力还是在驱使飞控加速，这时飞控就有可能冲过100m，产生一些震荡。因此我们引入D部分</p>
+<h3 id="D-微分部分">D:微分部分</h3>
+<p>我们用距离误差对时间求微分，距离误差的变化量实际上还是距离，因此求微分之后我们就得到了速度。速度越大，也就意味着系统变化越剧烈，也就是Kd*（e1-e2）越大，我们用着部分去抵挡P部分的变化，是不是就可以减少系统的震荡了。D部分就相当于对变化的一种阻尼，他是用来减小变化的。然鹅，这一系统还存在一个致命缺陷，需要我们的I算法登场了。</p>
+<h3 id="I-积分部分">I:积分部分</h3>
+<p>i算法的作用是消除稳态误差。我们想一下，飞控什么时候会停下来，是不是当升力等于重力的时候，这样的话，也就意味这升力需要存在，而升力取决与误差，因此误差必须存在，我们的飞控永远到不了100m的高度。</p>
+<p>也就是当系统误差已经接近0时,p的输出会很小,起不到继续减小误差的作用，导致误差始终没办法减小到0。这个时候就需要用到i算法,让误差值不断累加,并将累加后的值输出。可以看出，只要存在误差(这种误差叫稳态误差)，不论误差有多小,i的输出也会像滚雪球一样越滚越大。</p>
+<p>我们将这些误差值累计起来，然后进行输出，是不是最后就可以到达目标高度了。</p>
+<p><img src="/2024/07/24/STM32-learn-2/p3.png" alt="p3"></p>
+<h4 id="以上就是我对PID算法的一些通俗解释，而我们实际运用中通常就是对PID三个比例系数进行调整的过程，过大的话会引起反冲，而过小的话又会导致算法效果很小，需要我们自己调整">以上就是我对PID算法的一些通俗解释，而我们实际运用中通常就是对PID三个比例系数进行调整的过程，过大的话会引起反冲，而过小的话又会导致算法效果很小，需要我们自己调整</h4>
+<p>下面是一段伪代码：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">previous_error := 0  //初始误差值</span><br><span class="line"></span><br><span class="line"> integral := 0     //初始积分器</span><br><span class="line"></span><br><span class="line">loop:</span><br><span class="line"></span><br><span class="line">	 error := setpoint - measured_value //计算误差值</span><br><span class="line"></span><br><span class="line">	integral := integral + error x dt // 累加器计算积分</span><br><span class="line"></span><br><span class="line">	derivative := (error - previous_error) / dt //微分部分</span><br><span class="line"></span><br><span class="line">	output := Kp x error + Ki x integral + Kd x derivative //PID求和</span><br><span class="line"></span><br><span class="line"> 	previous_error := error wait(dt)goto loop   //当前的误差</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>可以从下方这里手动调参，体会PID算法的魅力。</p>
+<p><a target="_blank" rel="noopener" href="https://rossning92.github.io/pid-simulation">PID模拟程序</a></p>
+<h2 id="四、PID实现的代码分析（速度环控制）">四、PID实现的代码分析（速度环控制）</h2>
+<p>上面分析到，在实际情况中，如果不适用PID，只是输出一个固定的PWM，那么速度必然会受到路况的影响，从而不稳定。下面我们用STM32F407为例来使用PID。</p>
+<h3 id="1-定期读取编码器数据，即获取速度">1.定期读取编码器数据，即获取速度</h3>
+<blockquote>
+<p>STM32hal库中的系统配置，时钟配置，这里不再赘述</p>
+</blockquote>
+<ol>
+<li>
+<p>明确常用6Pin直流减速电机的接线<br>
+<img src="/2024/07/24/STM32-learn-2/4.png" alt="4"><br>
+<img src="/2024/07/24/STM32-learn-2/5.png" alt="5"><br>
+注意：通过判断A与B相哪一位在前，即可判断出正转还是反转</p>
+</li>
+<li>
+<p>在HAL库中将定时器二配置为上下边沿触发记数模式，用于读取编码器数据。<br>
+<img src="/2024/07/24/STM32-learn-2/6.png" alt="6"></p>
+</li>
+<li>
+<p>配置定时器一输出PWM控制电机速度，配置定时器三10ms进入一次中断<br>
+<img src="/2024/07/24/STM32-learn-2/7.png" alt="7"><br>
+<img src="/2024/07/24/STM32-learn-2/8.png" alt="8"><br>
+初始化函数：</p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HAL_TIM_Base_Start_IT(&amp;htim1);</span><br><span class="line">HAL_TIM_Base_Start(&amp;htim1);</span><br><span class="line">HAL_TIM_PWM_Start(&amp;htim1, TIM_CHANNEL_1);</span><br><span class="line"></span><br><span class="line">HAL_TIM_Encoder_Start(&amp;htim2, TIM_CHANNEL_ALL); <span class="comment">//开启编码器模式</span></span><br><span class="line">HAL_TIM_Base_Start_IT(&amp;htim2);</span><br><span class="line">   HAL_TIM_Base_Start(&amp;htim2);</span><br><span class="line">HAL_TIM_Base_Start_IT(&amp;htim3);</span><br><span class="line">LCD_Init();<span class="comment">//LCD初始化</span></span><br><span class="line">LCD_Fill(<span class="number">0</span>,<span class="number">0</span>,LCD_W,LCD_H,WHITE);</span><br></pre></td></tr></table></figure>
+<p>这里我使用了TFT_LCD屏来显示数据，详情可以看我的另一篇笔记：<a target="_blank" rel="noopener" href="https://zksdsb.github.io/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/">https://zksdsb.github.io/2024/07/22/STM32标准库移植HAL库教程/</a></p>
+<h3 id="2-将编码器数据转换为速度数据">2.将编码器数据转换为速度数据</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">float</span> <span class="title function_">Get_Speed</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int16_t</span> zj;</span><br><span class="line">    <span class="type">float</span> Speed = <span class="number">0</span>;</span><br><span class="line">    zj = __HAL_TIM_GetCounter(&amp;Encoder_TIM_Handle);</span><br><span class="line">    __HAL_TIM_SetCounter(&amp;Encoder_TIM_Handle, <span class="number">0</span>);</span><br><span class="line">    Speed = (<span class="type">float</span>)zj / (<span class="number">4</span> * <span class="number">15</span> * <span class="number">34</span>) * <span class="number">100</span> * <span class="number">60</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Speed;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们将其放在定时器中断反馈函数中：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span><br><span class="line">&#123;</span><br><span class="line"> <span class="keyword">if</span> (htim == &amp;htim3)</span><br><span class="line">    &#123;<span class="comment">//10ms中断</span></span><br><span class="line">        Speed = Get_Speed();<span class="comment">//获取转速</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在主函数循环中配置在LCD上显示speed：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LCD_ShowFloatNum1(<span class="number">72</span>,<span class="number">30</span>,speed,<span class="number">5</span>,RED,WHITE,<span class="number">16</span>);</span><br></pre></td></tr></table></figure>
+<p>效果如下：<br>
+<img src="/2024/07/24/STM32-learn-2/9.jpg" alt="9"><br>
+注意需要启动电机，然后如果显示为零，说明可能越界了，输出为负值，可以将编码器AB相反过来</p>
+<h3 id="3-编写PID函数">3.编写PID函数</h3>
+<p>上面示例的PID伪函数已经为我们提供了框架。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">motor</span><span class="params">(<span class="type">int16_t</span> Speed)</span><span class="comment">//填入参数速度 0~500</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(Speed&gt;=<span class="number">0</span>)&#123;</span><br><span class="line">	HAL_GPIO_WritePin(GPIOF,IN1_Pin,GPIO_PIN_SET);</span><br><span class="line">	HAL_GPIO_WritePin(GPIOF,IN2_Pin,GPIO_PIN_RESET);</span><br><span class="line">    __HAL_TIM_SET_COMPARE(&amp;htim1,TIM_CHANNEL_1, Speed*<span class="number">10</span>);</span><br><span class="line">    <span class="comment">//这里最高占空比为5000，用500对应 正转</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span>&#123;</span><br><span class="line">		HAL_GPIO_WritePin(GPIOF,IN1_Pin,GPIO_PIN_RESET);</span><br><span class="line">		HAL_GPIO_WritePin(GPIOF,IN2_Pin,GPIO_PIN_SET);</span><br><span class="line">    __HAL_TIM_SET_COMPARE(&amp;htim1,TIM_CHANNEL_1, (<span class="number">-1</span>*Speed)*<span class="number">10</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//反转状态</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> __<span class="title">PID_Increment_Struct</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">float</span> Kp, Ki, Kd;  <span class="comment">//比例系数、积分系数、微分系数</span></span><br><span class="line">    <span class="type">float</span> Error_Last1; <span class="comment">//上次误差</span></span><br><span class="line">    <span class="type">float</span> Error_Last2; <span class="comment">//上次误差</span></span><br><span class="line">    <span class="type">float</span> Out_Last;    <span class="comment">//上次输出</span></span><br><span class="line">&#125; PID_Increment_Struct;</span><br><span class="line"></span><br><span class="line"><span class="type">float</span> <span class="title function_">PID_Increment</span><span class="params">(PID_Increment_Struct *PID, <span class="type">float</span> Current, <span class="type">float</span> Target)</span><span class="comment">//PID输出函数  参数1：结构体__PID_Increment_Struct的地址</span></span><br><span class="line">				   <span class="comment">//参数2：当前值</span></span><br><span class="line">				   <span class="comment">//参数3：目标值</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">float</span> err,                                                                                                       <span class="comment">//误差</span></span><br><span class="line">        out,                                                                                                         <span class="comment">//输出</span></span><br><span class="line">        proportion,                                                                                                  <span class="comment">//比例</span></span><br><span class="line">        differential;                                                                                                <span class="comment">//微分</span></span><br><span class="line">    err = (<span class="type">float</span>)Target - (<span class="type">float</span>)Current;                                                                            <span class="comment">//计算误差</span></span><br><span class="line">    proportion = (<span class="type">float</span>)err - (<span class="type">float</span>)PID-&gt;Error_Last1;                                                               <span class="comment">//计算比例项</span></span><br><span class="line">    differential = (<span class="type">float</span>)err - <span class="number">2</span> * (<span class="type">float</span>)PID-&gt;Error_Last1 + (<span class="type">float</span>)PID-&gt;Error_Last2;                               <span class="comment">//计算微分项</span></span><br><span class="line">    out = (<span class="type">float</span>)PID-&gt;Out_Last + (<span class="type">float</span>)PID-&gt;Kp * proportion + (<span class="type">float</span>)PID-&gt;Ki * err + (<span class="type">float</span>)PID-&gt;Kd * differential; <span class="comment">//计算PID</span></span><br><span class="line">    PID-&gt;Error_Last2 = PID-&gt;Error_Last1;                                                                             <span class="comment">//更新上上次误差</span></span><br><span class="line">    PID-&gt;Error_Last1 = err;                                                                                          <span class="comment">//更新误差</span></span><br><span class="line">    PID-&gt;Out_Last = out;	<span class="comment">//更新上此输出</span></span><br><span class="line">    <span class="keyword">return</span> out;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-在定时器中不断更新PID输出">4.在定时器中不断更新PID输出</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">HAL_TIM_PeriodElapsedCallback</span><span class="params">(TIM_HandleTypeDef *htim)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">float</span> Speed = <span class="number">0</span>;</span><br><span class="line">    <span class="type">int16_t</span> set_speed = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (htim == &amp;htim2)</span><br><span class="line">    &#123;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (htim == &amp;htim3)</span><br><span class="line">    &#123;<span class="comment">//10ms中断</span></span><br><span class="line">        Speed = Get_Speed();<span class="comment">//获取转速</span></span><br><span class="line">        mb_speed = <span class="number">300</span>;</span><br><span class="line">        set_speed = PID_Increment(&amp;PID_Speed, Speed, mb_speed);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (set_speed &gt; <span class="number">500</span>)</span><br><span class="line">            set_speed = <span class="number">500</span>;</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">            motor(set_speed);</span><br><span class="line">            speed=Speed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="5-实验现象">5.实验现象</h3>
+<p><img src="/2024/07/24/STM32-learn-2/10.jpg" alt="10"><br>
+电机刚开始速度很快，后马上降到300，与目标值相近</p>
+<h2 id="参考资料：">参考资料：</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1et4y1i7Gm/?spm_id_from=333.880.my_history.page.click&amp;vd_source=2fe640bda6829f493f3f981af9ae9185">通俗易懂的 PID 控制算法讲解</a>)</p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1iP411x71X/?spm_id_from=333.999.top_right_bar_window_history.content.click&amp;vd_source=2fe640bda6829f493f3f981af9ae9185">PID从入门到实战</a>)</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_57585228/article/details/126673975">STM32F4HAL库电机控制(转速和角度)</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        <a href="/tags/%E7%AE%97%E6%B3%95/"># 算法</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/07/22/STM32%E6%A0%87%E5%87%86%E5%BA%93%E7%A7%BB%E6%A4%8DHAL%E5%BA%93%E6%95%99%E7%A8%8B/">STM32标准库移植HAL库教程</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
