@@ -231,14 +231,18 @@
 <li>font-weight：字体粗细</li>
 <li>font-stretch：拉伸或者收缩字体</li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">style</span>=<span class="string">&quot;font:  bolder 50px &#x27;KaiTi&#x27;;&quot;</span>&gt;</span>font复合属性示例<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>显示效果：</p>
+<h1 style="font:  bolder 50px 'KaiTi';">font复合属性示例</h1>
 <h3 id="文本属性">文本属性</h3>
 <ol>
 <li>line-height：设置行间距</li>
 <li>width：宽度</li>
 <li>height：高度</li>
 </ol>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span> <span class="attr">style</span>=<span class="string">&quot;line-height: 40px;&quot;</span>&gt;</span>这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>显示效果：</p>
+<p style="line-height: 40px;">这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本这是一段很长的文本</p>
 <blockquote>
 <p>只有行内块元素和块级元素才能设置宽和高以及页边距等，行内元素的宽度和高度只取决于它的内容，无法接收外来设置，但是其三者之间是可以相互转化的。</p>
 </blockquote>
@@ -246,7 +250,9 @@
 <ul>
 <li>display： inline inline-block block none</li>
 </ul>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">style</span>=<span class="string">&quot;display: inline; background-color: blue&quot;</span>&gt;</span>这是转换成行内元素的div标签<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<div style="display: inline; background-color: blue">这是转换成行内元素的div标签</div>
+<p>可以看到背景色与内容有关，它已经被转换成了行内元素</p>
 
         </div>
 
