@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>STM32-learn-3 | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">STM32-learn-3</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 7, 2024&nbsp;&nbsp;11:35:26</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E5%AD%A6%E4%B9%A0/">STM32学习</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>USART串口协议学习</h1>
+<h2 id="串口通信简介">串口通信简介</h2>
+<ul>
+<li>串口是一种应用广泛的通信借口，串口成本低，容易使用，通信线路简单，可以实现两个设备点对点之间的通信</li>
+<li>单片机的串口可以实现单片机与单片机，单片机与电脑，以及单片机与其它模块的通信，增加了其应用范围，也方便了调试数据</li>
+</ul>
+<h2 id="硬件电路">硬件电路</h2>
+<p><img src="/2024/08/07/STM32-learn-3/1.png" alt="1"></p>
+<ul>
+<li>TX与RX是单端信号，它们的参考电平都是相对于GND的</li>
+<li>TX与RX要交叉连接</li>
+<li>当只需单向通信时，可以只接一根数据线</li>
+<li>当电平标准不一样时，需要电平转换芯片</li>
+</ul>
+<h2 id="常见电平标准：">常见电平标准：</h2>
+<p><img src="/2024/08/07/STM32-learn-3/2.png" alt="2"></p>
+<h2 id="串口协议的软件部分">串口协议的软件部分</h2>
+<ol>
+<li>波特率：码元/s，另外需要区分的就是比特率，它表示bit/s（bps）</li>
+<li>在二进制调试下，一个码元就是一个bit，二者速率相等，波特率等于比特率<code>注意在多进制调制下，可能会有差别</code></li>
+<li>起始位固定为低电平，高电平为空闲状态</li>
+<li>停止位固定为高电平。可以为下一次传输做准备，因为起始位需要下降沿</li>
+<li>数据位采用低位先行，需要注意</li>
+<li>校验位：奇偶校验位<br>
+奇校验：发送方会在数据位之后补1或者0来保证这9位数据里有奇数个1，接收方接收时如果还是奇数个，则认为传输无误，如果是偶数个，则说明数据有错误，传输出错，就可以选择丢弃，数据重传<br>
+偶校验：同上，只不过保证1的个数是偶数</li>
+</ol>
+<blockquote>
+<p>我们可以看到，这两种校验的缺陷非常明显，一旦出现了偶数个数据错误，则奇偶性不改变，检查不出来了，这时候我们会采用CRC校验，这个校验更加准确，但是也会更加复杂</p>
+</blockquote>
+<p><img src="/2024/08/07/STM32-learn-3/3.png" alt="3"></p>
+<p>以上就是串口发送一个字节的格式，一个字节通过一个数据帧的形式进行传输，一个数据帧有10位：起始位，数据位（8位），停止位，这个格式是串口协议规定的</p>
+<blockquote>
+<p>也可以是11位，在数据位最后加一个奇偶校验位，发送与接收必须约定好速率</p>
+</blockquote>
+<h2 id="串口时序">串口时序</h2>
+<p><img src="/2024/08/07/STM32-learn-3/4.png" alt="4"></p>
+<blockquote>
+<p>与I2C和SPI时序不同，因为串口时序是异步时序，对时序的要求很高，因此我们不采用软件来手动操控时序来实现串口通信，一般都是直接利用硬件电路来搭建串口时序的</p>
+<p>这个反转高低电平的操作由外设电路完成，不需要我们操心</p>
+</blockquote>
+<p><img src="/2024/08/07/STM32-learn-3/5.png" alt="5"><br>
+第一个数据为0x55，可以看到确实是低位先行</p>
+<p>另外可以看到，每一个bit大概是104us，通过计算我们可以得出波特率为1s/(104us/bit)最后约等于9600，也就是9600的波特率</p>
+<h2 id="stm32USART外设">stm32USART外设</h2>
+<p><img src="/2024/08/07/STM32-learn-3/6.png" alt="6"></p>
+<p>1.同步通信这里我们一般用不到，它主要用于输出时钟<br>
+因此这里主要是使用UART</p>
+<ol start="2">
+<li>
+<p>硬件支持电路，可以根据数据寄存器的一个字节数据自动生成数据帧时序，也就是根据波特率来反转高低电平，也可以自动接收高低电平，将其存放在数据寄存器里</p>
+</li>
+<li>
+<p>自带波特率发生器其实就是一个分频器，比如我们给APB2总线72MHz的频率，然后波特率发生器进行分频来当做串口时钟</p>
+</li>
+<li>
+<p>数据位长度：选择是否要校验 、停止位长度：决定两个数据帧的间隔</p>
+</li>
+<li>
+<p>硬件流控制：可以控制传输缓冲，可以避免接收机处理慢而导致数据丢失的问题</p>
+</li>
+<li>
+<p>只能卡、IrDA、LIN与串口协议很像，因此这里可以操作一下</p>
+</li>
+<li>
+<p>USART1是APB1上的设备，其余两个都是APB2上的设备</p>
+</li>
+</ol>
+<h2 id="STM32串口框图（硬件电路）">STM32串口框图（硬件电路）</h2>
+<ul>
+<li>硬件控制流</li>
+<li>唤醒单元</li>
+<li>中断输出控制</li>
+<li>波特率发生器</li>
+<li>状态寄存器<br>
+<img src="/2024/08/07/STM32-learn-3/9.png" alt="9"></li>
+</ul>
+<p>先来看USART的主体部分，就是发阿松数据寄存器（TDR）与接收数据寄存器（RDR）这两部分，这两个寄存器占用同一个地址，在程序上值表示为一个寄存器，表示为数据寄存器DR，当进行写操作时，数据就写到TDR,当进行读操作时，数据就读RDR.</p>
+<p>发送移位寄存器：把一个字节的数据一位一位移出去，正好对应查案口协议的波形的数据位，当数据从TDR移位到移位寄存器时会置一个标志位，叫做TXE （TX Empty）,发射寄存器空，我们检查这个标志位，如果这里为1，我们就可以在TDR写下一个数据了</p>
+<p>接收移位寄存器：一位一位读取接收引脚的数据电平，当一个字节移位完成后，就会一起进去接收数据寄存器，这时候就会置标志位RXNE(RX Not Empty)，接收数据寄存器非空为1，当我们检测到时，就可以把数据读走了</p>
+<h2 id="STM32复用引脚表：寻找USART引脚配置">STM32复用引脚表：寻找USART引脚配置</h2>
+<p><a href>复用引脚</a></p>
+<h2 id="USART基本结构">USART基本结构</h2>
+<p><img src="/2024/08/07/STM32-learn-3/6.png" alt="6"></p>
+<p>右移符号标志低位先行</p>
+<h2 id="USB转串口模块（CH340）">USB转串口模块（CH340）</h2>
+<h2 id="代码部分">代码部分</h2>
+<p><img src="/2024/08/07/STM32-learn-3/7.png" alt="7"></p>
+<h3 id="一、USART初始化">一、USART初始化</h3>
+<ol>
+<li>打开USART和GPIO时钟打开</li>
+<li>GPIO初始化，把TX配置成复用输出，RX配置成输入、</li>
+<li>配置USART参数，使用结构体，和配置GPIO参数类似</li>
+<li>开启USART</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Serial_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1,ENABLE);<span class="comment">//USART1时钟使能</span></span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);<span class="comment">//GPIOA使能</span></span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;<span class="comment">//PA9设置为复用推挽输出，为TX引脚</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_9;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOA, &amp;GPIO_InitStructure);						</span><br><span class="line"></span><br><span class="line">	</span><br><span class="line">	USART_InitTypeDef USART_Structure;</span><br><span class="line">	USART_Structure.USART_BaudRate=<span class="number">9600</span>;<span class="comment">//配置波特率</span></span><br><span class="line">	USART_Structure.USART_HardwareFlowControl=USART_HardwareFlowControl_None ;<span class="comment">//配置数据流控制</span></span><br><span class="line">	USART_Structure.USART_Mode=USART_Mode_Tx;<span class="comment">//配置发送还是接收模式</span></span><br><span class="line">	USART_Structure.USART_Parity=USART_Parity_No;<span class="comment">//不需要校验</span></span><br><span class="line">	USART_Structure.USART_StopBits=USART_StopBits_1;<span class="comment">//停止位帧数</span></span><br><span class="line">	USART_Structure.USART_WordLength=USART_WordLength_8b;<span class="comment">//数据字长</span></span><br><span class="line">	</span><br><span class="line">	USART_Init(USART1,&amp;USART_Structure);</span><br><span class="line">	</span><br><span class="line">	USART_Cmd(USART1,ENABLE);<span class="comment">// 开启串口</span></span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二、USART发送数据">二、USART发送数据</h3>
+<p><img src="/2024/08/07/STM32-learn-3/8.png" alt="8"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Serial_SendByte</span><span class="params">(<span class="type">uint8_t</span> Byte)</span></span><br><span class="line">&#123;</span><br><span class="line">	USART_SendData(USART1,Byte);<span class="comment">//Byte变量写入TDR</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span>(USART_GetFlagStatus(USART1,USART_FLAG_TXE)==RESET);<span class="comment">//等待标志位，说明TDR已经进入移位寄存器了，防止TDR数据覆盖</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意这里不需要写手动清零，因为我们进行写操作时TXE标志位会自动清零</p>
+</blockquote>
+<p>接下来我们基于此来编写一些常用的发送函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">Serial_SendArray</span><span class="params">(<span class="type">uint8_t</span> *Array,<span class="type">uint16_t</span> length)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint16_t</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		Serial_SendByte(Array[i]);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Serial_SendStr</span><span class="params">(<span class="type">char</span> *Str)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint16_t</span> i=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">while</span>(Str[i]!=<span class="string">&#x27;\0&#x27;</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		Serial_SendByte(Str[i]);</span><br><span class="line">		i++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">uint32_t</span> <span class="title function_">Serial_Pow</span><span class="params">(<span class="type">uint32_t</span> x,<span class="type">uint32_t</span> y)</span></span><br><span class="line">&#123;</span><br><span class="line">		<span class="type">uint32_t</span> result=<span class="number">1</span>;</span><br><span class="line">	    <span class="keyword">while</span>(y--)</span><br><span class="line">		&#123;</span><br><span class="line">			result *=x;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">Serial_SendNum</span><span class="params">(<span class="type">uint32_t</span> Num,<span class="type">uint16_t</span> length)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;length;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		Serial_SendByte(Num/Serial_Pow(<span class="number">10</span>,length-i<span class="number">-1</span>)%<span class="number">10</span>+<span class="string">&#x27;0&#x27;</span>);</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>对printf进行重定向：<br>
+勾选MIcrolib并且包含stdio头文件<br>
+<img src="/2024/08/07/STM32-learn-3/10.png" alt="10"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fputc</span><span class="params">(<span class="type">int</span> ch ,FILE *f)</span></span><br><span class="line">&#123;</span><br><span class="line">	Serial_SendByte(ch);</span><br><span class="line">	<span class="keyword">return</span> ch;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Num=%d\r\n&quot;</span>,<span class="number">777</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这种方法printf只能被绑定一个，想要用到其它串口来打印就不行</p>
+</blockquote>
+<p>sprintf方法：先打印到字符串，然后再发送字符串</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> Str[<span class="number">12</span>];</span><br><span class="line"><span class="built_in">sprintf</span>(Str,<span class="string">&quot;num=%d\r\n&quot;</span>,<span class="number">555</span>);</span><br><span class="line">Serial_SendStr(Str);</span><br></pre></td></tr></table></figure>
+<h3 id="二、USART串口接收">二、USART串口接收</h3>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        <a href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/"># 通信协议</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/07/24/%E8%A7%A3%E5%86%B3%E5%BC%80%E4%BA%86clash%E5%90%8E%E8%BF%9E%E4%B8%8D%E4%B8%8A%E7%BD%91%E7%9A%84%E9%97%AE%E9%A2%98/">解决开了clash后连不上网的问题</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
