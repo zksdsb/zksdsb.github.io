@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>I2C协议学习 | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">I2C协议学习</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 7, 2024&nbsp;&nbsp;22:34:07</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E5%AD%A6%E4%B9%A0/">STM32学习</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>I2C协议学习</h1>
+<ul>
+<li>I2C（Inter IC Bus）是由Philips公司开发的一种通用数据总线（Inter-Integrated Circuit）意思是芯片与芯片间的通信</li>
+</ul>
+<p><img src="/2024/08/07/STM32-learn-4/1.png" alt="1"></p>
+<ul>
+<li>
+<p>从图中可以看到，这种通讯协议的应用非常广泛：在MPU6050陀螺仪、OLED显示屏、存储器、温湿度传感器等都有许多应用</p>
+</li>
+<li>
+<p>I2C协议中关键的接口就只有两个：SDA(数据线)、SCL(时钟线)</p>
+</li>
+<li>
+<p>I2C协议是主从同步时序，半双工通信，可以通过软件也可以通过硬件电路实现I2C</p>
+</li>
+<li>
+<p>支持总线挂载多设备（一主多从，多主多从）</p>
+</li>
+<li>
+<p>I2C的最大优势在于节约IO口，可以用简单的两条线路连接起来多个设备</p>
+</li>
+<li>
+<p>实现单片机读取外部模块寄存器的功能，实现了数据应答，时钟可以有偏差</p>
+</li>
+</ul>
+<hr>
+<h2 id="电路模型">电路模型</h2>
+<p><img src="/2024/08/07/STM32-learn-4/2.png" alt="2"></p>
+<ul>
+<li>
+<p>主机完全掌握SCL线，任何时候都是主机完全掌握SCL线，另外在空闲状态下，主机可以主动发起对SDA的控制，只有从机发送数据或者应答的时候，从机才会掌握SDA</p>
+</li>
+<li>
+<p>对于SCL线，可以设置主机为输出模式，从机为输入模式，不会产生问题</p>
+</li>
+<li>
+<p>对于SDA线，主机与从机都可以输出或者输入，当二者一个输出低电平，一个输出高电平时就会产生短路，因此电路模型中禁止所有设备输出强上拉的高电平，采用输出外置弱电阻上拉的开漏输出模式</p>
+</li>
+<li>
+<p>因此SCL与SDA均设置为开漏输出模式，添加一个4.7k的上拉电阻</p>
+</li>
+</ul>
+<h3 id="对于开漏输出弱上拉模式的理解">对于开漏输出弱上拉模式的理解</h3>
+<ul>
+<li>开漏输出的本质是可以输出低电平和一个浮空输出的电平，相当于一个杆子，要么是低，要么是飘忽不定，这时我们给它加上一个上拉电阻，就相当于在它上面挂了一个弹簧，如果我们拉下它，弹簧拉不过我们，那么就会是低电平，如果我们不拉，弹簧就会往上拉，这时杆子就会升高但是又不会过高。</li>
+<li>同时兼具了输入和输出的功能，若是想输出，那放手便是高电平，向下拉就是低电平，若是想输入，就直接放手，观察杆子的高低就行了</li>
+<li>只要有一个或者多个设备输出电平，就会输出低电平，可以实现总线仲裁等功能，这里不再详细展开</li>
+</ul>
+<hr>
+<h2 id="I2C时序的基本单元">I2C时序的基本单元</h2>
+<h3 id="基本原则">基本原则</h3>
+<p>1.数据接收和发送的时机单元都是以时钟线的低电平截止低电平结束</p>
+<p>2.SCL在高电平时SDA的数据被读取，此时才是有效的，例如此时SDA为高，那就为1，低就为0，如果在SCL高电平期间出现电平的变化，那就是起始和终止条件</p>
+<h4 id="起始与终止">起始与终止</h4>
+<p><img src="/2024/08/07/STM32-learn-4/3.png" alt="3"></p>
+<p>一个完整的数据帧，总是由起始条件开始，由终止单元结束，并且其总是由主机来发出的（一主多从模式）</p>
+<h4 id="发送（主机掌控一切，从机在SCL为高时被动读取）">发送（主机掌控一切，从机在SCL为高时被动读取）</h4>
+<p><img src="/2024/08/07/STM32-learn-4/4.png" alt="4"></p>
+<blockquote>
+<p>注意上图并不是说SDA有两根，只是列举它的不同状态，发送时SDA依旧由主机掌控，高位先行，而串口是低位先行。如果此时主机进入中断等操作暂停通信，那么就将SCL拉低，从机依旧会等待主机高电平的时候，通信仍在继续，这就是同步时序的好处</p>
+</blockquote>
+<h4 id="接收（主机释放SDA，从机发送数据，主机在SCL高电平读取数据）">接收（主机释放SDA，从机发送数据，主机在SCL高电平读取数据）</h4>
+<p><img src="/2024/08/07/STM32-learn-4/5.png" alt="5"></p>
+<h4 id="应答机制">应答机制</h4>
+<p><img src="/2024/08/07/STM32-learn-4/6.png" alt="6"></p>
+<blockquote>
+<p>发送应答，是主机对从机的数据回应，接收应答是从机对主机的发送进行回应</p>
+</blockquote>
+<ul>
+<li>接收应答相当于主机释放了杆子的控制权，如果有人收到数据了，就把杆子给拽下来，输出低电平，主机也就能通过杆子状态得到回应，如果还是高电平，那就说明没有人回应主机</li>
+<li>发送应答可以用来实现从机继续发送数据，如果不回应，那就代表只需要这一个字节的数据，不要继续发送了，反之则继续发送</li>
+</ul>
+<hr>
+<h2 id="I2C完整时序">I2C完整时序</h2>
+<h3 id="从机7位地址：相当于从机的名字，一个总线上挂载每个设备的地址必须都是不一样的，一般可以进行低位更改，通过响应引脚接法进行改名，详情需要参考数据手册，高位由厂商决定">从机7位地址：相当于从机的名字，一个总线上挂载每个设备的地址必须都是不一样的，一般可以进行低位更改，通过响应引脚接法进行改名，详情需要参考数据手册，高位由厂商决定</h3>
+<h3 id="读写1微地址：1表示读操作，0表示写操作">读写1微地址：1表示读操作，0表示写操作</h3>
+<h4 id="一、指定地址写">一、指定地址写</h4>
+<p><img src="/2024/08/07/STM32-learn-4/7.png" alt="7"><br>
+可以从图中看到：</p>
+<ol>
+<li>我们刚开始先拉低SDA表示起始</li>
+<li>后开始翻转转SCL，在SCL为低电平的时候，主机开始反转SDA数据，在SCL为高的时候，SDA不能动了，从机开始读取SDA上的数据，前7位代表从机的7位地址<code>0XD0</code>，最后一位为0,表示主机将要进行写操作</li>
+<li>紧跟着的单元，就得是发送应答位，也就是主机发送数据后接收从机的应答位，主机要释放SDA，也就是把SDA高电平，但是图中SDA仍为低，说明从机立刻就应答了</li>
+</ol>
+<h3 id="从机设备可以自己定义第二个字节和后续字节的用途：一般第二个字节可以是寄存器地址或者是指令控制字等，比如MPU6050第二个字节就是寄存器地址，而AD转换器就是指令控制字，存储器二字节就是存储器地址">从机设备可以自己定义第二个字节和后续字节的用途：一般第二个字节可以是寄存器地址或者是指令控制字等，比如MPU6050第二个字节就是寄存器地址，而AD转换器就是指令控制字，存储器二字节就是存储器地址</h3>
+<p><img src="/2024/08/07/STM32-learn-4/8.png" alt="8"></p>
+<ol start="4">
+<li>在图中可以看到，主机又发送了<code>0X19</code>,（即寄存器地址）从机再次进行应答</li>
+<li>主机再次发送第三个字节，这个字节表示主机想要写入到<code>0x19</code>地址下寄存器的内容了，这里写入了<code>0xAA</code>,然后再次被应答</li>
+<li>最后停止，在停止条件之前，先拉低SDA，为后续SCL为高电平期间,SDA的上升沿做准备</li>
+</ol>
+<h5 id="这样一个完整的数据帧就完成了">这样一个完整的数据帧就完成了</h5>
+<h4 id="二、当前地址读">二、当前地址读</h4>
+<p><img src="/2024/08/07/STM32-learn-4/9.png" alt="9"></p>
+<ol>
+<li>首先是一个开始时序，在SCL高电平期间拉低SDA开始，后翻转SCL</li>
+<li>主机发送一个字节<code>0xD1</code>表示主机要读这个前7位地址从机的数据了</li>
+<li>从机发送应答给主机，并且掌握SDA的控制权</li>
+<li>在SCL低电平期间从机要抓紧完成SDA的切换放上去数据，在SCL为高电平期间被主机读取</li>
+<li>从机放上去数据为<code>0x0F</code></li>
+</ol>
+<ul>
+<li>
+<p>但是这个时候有一个文体，我们不知道<code>0x0F</code>是从机哪个寄存器发送的数据。</p>
+</li>
+<li>
+<p>这就需要我们说到的当前地址指针了，在从机中，所有的寄存器被分配到了一个线性区域中，并且会有个单独的指针变量指向着其中一个寄存器，这个指针上电默认，一般指向0地址，并且每写入一个字节或读出一个字节后，这个指针就会自增一次，移向下一位地址</p>
+</li>
+<li>
+<p>若我们刚刚调用完上面的指定地址写，在MPU6050的<code>0x19</code>地址中写完数据后，当前指针会自增到<code>0x1A</code>的位置上，刚刚读取到的<code>0x0F</code>就是这个寄存器放上去的</p>
+<blockquote>
+<p>注意：只有进行了完整的读写操作，指针才会移位，如果没有进行完整，则指针会停留在当前位置，也方便了我们下面的操作</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="三、指定地址读">三、指定地址读</h4>
+<ul>
+<li>刚才我们了解到，若想把当前指针指向我们想要的寄存器地址，就需要先对这个寄存器进行读的操作，然后我们不读，而是重新开始，这样指针变量就已经移到这个寄存器的地址上了</li>
+<li>总体操作逻辑，就是先进行指定地址写，写完第二个字节（即是寄存器地址），正准备写第三个字节的时候我们重新进行一个开始，变为当前地址读的时序，两者加在一起，就是指定地址读<br>
+<img src="/2024/08/07/STM32-learn-4/10.png" alt="10"></li>
+</ul>
+<ol>
+<li>可以看到我们先进行了指定地址写的操作，先写了从机地址（第一个字节<code>0xD0</code>），然后写了从机寄存器地址（第二个字节<code>0x19</code>），从机进行两次应答</li>
+<li>接着在写完0准备进行读第三次字节时我们不让主机继续发送数据，而是在SCL为高的时候，给SDA一个下降沿（即开始标志）</li>
+</ol>
+<p><img src="/2024/08/07/STM32-learn-4/11.png" alt="11"></p>
+<ol start="3">
+<li>重复起始条件之后，我们让主机写数据，再次呼唤从机，但是要注意，此时从机内部的指针已经指向了<code>0x19</code>地址的下一位了，我们在第八位写上1进行数据读取，读到的就是<code>0x1A</code>寄存器的数据了</li>
+<li>最后我们让主机回应从机是低电平，表示不要再传数据了</li>
+<li>最后给它一个结束条件，完成一个字节的数据读取</li>
+</ol>
+<blockquote>
+<p>也就是主机在读取数据时，只能选择从机的id来读，但是不能确定是读从机的哪一个寄存器，因此我们需要先进行写两个字节的操作，把指针放到我们想要的寄存器上，重新开使，再指定从机读就好了。</p>
+<p>特别注意：从机地址是7位的，寄存器地址是8位的，数据也8位的，切记不要混淆了</p>
+</blockquote>
+<h3 id="I2C进阶时序">I2C进阶时序</h3>
+<ol>
+<li>连续写多个字节，很简单，就是在指定地址写完第三个字节（即数据字节）的基础上不进行结束，而是在接收应答后继续写，不过我们要主机，由于指针的自增，是不是我们的下一个字节就会写在下一位寄存器上，也就是连续写入多个寄存器了，提高执行效率</li>
+<li>连续读多个字节，也是在指定地址读的最后，我们让主机进行应答，也不结束标志，这样从机的下一位寄存器就会向主机发来数据，依次传递，也就是连续读多个寄存器</li>
+</ol>
+<blockquote>
+<p>这几个进阶时序的连续读写，都是在寄存器指针自增的基础上进行的</p>
+</blockquote>
+<hr>
+<h2 id="软件I2C通信">软件I2C通信</h2>
+<blockquote>
+<p>我们一般很少用软件来模拟串口通信，因为它是一种异步时序通信，需要双方的速率对应好，因此抗干扰能力差，对时序要求高，因此一般用硬件电路来实现，需要USART电路搭建</p>
+</blockquote>
+<h3 id="概念">概念</h3>
+<p>不依赖硬件电路，在软件中使用代码手动翻转IO口来实现IIC通信</p>
+<h3 id="优势">优势</h3>
+<p>端口不受限，可以任意指定</p>
+<h3 id="代码部分一：时序单元部分">代码部分一：时序单元部分</h3>
+<p>这里使用STM32标准库作为示例：</p>
+<h4 id="初始宏定义">初始宏定义</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> SCL_PORT  GPIOB    <span class="comment">//这里可以进行引脚修改</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SCL_PIN  GPIO_Pin_10</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SDA_PORT  GPIOB</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SDA_PIN  GPIO_Pin_11</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SCL_CLR GPIO_ResetBits(SCL_PORT,SCL_PIN);Delay_us(10)<span class="comment">//时钟线置低</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SCL_SET	GPIO_SetBits(SCL_PORT,SCL_PIN);Delay_us(10)<span class="comment">//时钟线置高，即释放时钟线</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SDA_CLR GPIO_ResetBits(SDA_PORT,SDA_PIN);Delay_us(10)<span class="comment">//数据线置低</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SDA_SET	GPIO_SetBits(SDA_PORT,SDA_PIN);Delay_us(10)<span class="comment">//释放数据线</span></span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> SDA_READ GPIO_ReadInputDataBit(SDA_PORT,SDA_PIN)<span class="comment">//读取数据线</span></span></span><br></pre></td></tr></table></figure>
+<p>使用宏定义可以帮助我们快速移植或者修改引脚而不出问题</p>
+<h4 id="引脚设置为弱上拉开漏输出模式">引脚设置为弱上拉开漏输出模式</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SCL PB10</span></span><br><span class="line"><span class="comment">// SDA PB11</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">myi2c_Init</span><span class="params">(<span class="type">void</span>)</span> <span class="comment">//将引脚配置为弱上拉开漏输出</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/*开启时钟*/</span></span><br><span class="line">	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOB, ENABLE);		<span class="comment">//开启GPIOA的时钟</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*GPIO初始化*/</span></span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;  <span class="comment">//输入时，先输1，即释放SDA总线，然后拉高SCL</span></span><br><span class="line">													<span class="comment">//读取输入数据寄存器就好了,</span></span><br><span class="line">											<span class="comment">//这就是之前提到的开漏输出的好处，它是可以读取寄存器的</span></span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	GPIO_Init(GPIOB, &amp;GPIO_InitStructure);						<span class="comment">//将PB10和PB11引脚初始化为推挽输出</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*设置GPIO初始化后的默认电平*/</span></span><br><span class="line">	GPIO_SetBits(GPIOB, GPIO_Pin_10 | GPIO_Pin_11);<span class="comment">//  释放SCL与SDA总线</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//SCL为高的时候，SDA给下降沿就是开始，给上升沿就是结束</span></span><br><span class="line"><span class="comment">//因此开始时先升高SDA,结束时先拉低SDA</span></span><br></pre></td></tr></table></figure>
+<h4 id="开始与结束时序">开始与结束时序</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//SCL为高的时候，SDA给下降沿就是开始，给上升沿就是结束</span></span><br><span class="line"><span class="comment">//因此开始时先升高SDA,结束时先拉低SDA</span></span><br><span class="line"><span class="type">void</span> <span class="title function_">myi2c_Start</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	SDA_SET;<span class="comment">//为了兼容重复开始条件，这里保险起见，先释放SDA</span></span><br><span class="line">	SCL_SET;</span><br><span class="line">	</span><br><span class="line">	SDA_CLR;</span><br><span class="line">	SCL_CLR;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">myi2c_Stop</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	SDA_CLR;</span><br><span class="line">	SCL_SET;</span><br><span class="line">	SDA_SET;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主机发送一个字节时序">主机发送一个字节时序</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">myi2c_Send</span><span class="params">(<span class="type">uint8_t</span>  Byte)</span><span class="comment">//紧跟start，因此刚开始SCL和SDA都是低电平</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i;</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="type">uint8_t</span> a=Byte&amp;(<span class="number">0x80</span>&gt;&gt;i);</span><br><span class="line">		<span class="keyword">if</span>(a==<span class="number">0</span>)<span class="comment">//如果发送数据位为 0</span></span><br><span class="line">		&#123;</span><br><span class="line">			SDA_CLR;<span class="comment">//在SCL是低电平的时候写上数据</span></span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			SDA_SET;</span><br><span class="line">			</span><br><span class="line">		&#125;</span><br><span class="line">		SCL_SET;<span class="comment">//从机读取数据</span></span><br><span class="line">		SCL_CLR;<span class="comment">//SCL置低，SDA再次写数据</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主机接收一个字节时序">主机接收一个字节时序</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> <span class="title function_">myi2c_Receive</span><span class="params">(<span class="type">void</span>)</span><span class="comment">//紧跟start，因此刚开始SCL和SDA都是低电平</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i;</span><br><span class="line">	<span class="type">uint8_t</span> Byte = <span class="number">0x00</span>;</span><br><span class="line">	SDA_SET;<span class="comment">//SDA控制权交给从机</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;<span class="number">8</span>;i++)</span><br><span class="line">	&#123;</span><br><span class="line">		SCL_SET;<span class="comment">//置高电平准备读取从机数据</span></span><br><span class="line">		<span class="keyword">if</span>(SDA_READ==<span class="number">0</span>)<span class="comment">//如果发送数据位为 0</span></span><br><span class="line">		&#123;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span></span><br><span class="line">		&#123;</span><br><span class="line">			Byte= Byte+(<span class="number">0x80</span>&gt;&gt;i);</span><br><span class="line">			</span><br><span class="line">		</span><br><span class="line">		&#125;</span><br><span class="line">		SCL_CLR;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Byte;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主机接收数据后对从机应答">主机接收数据后对从机应答</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">myi2c_ReceiveAck</span><span class="params">(<span class="type">uint8_t</span>  AckBit)</span><span class="comment">//紧跟Receive，因此刚开始SCL是低电平，SDA不确定</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(AckBit)</span><br><span class="line">	&#123;</span><br><span class="line">		SDA_SET;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		SDA_CLR;</span><br><span class="line">	&#125;</span><br><span class="line">	SCL_SET;</span><br><span class="line">	SCL_CLR;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="主机发送数据后接收从机应答">主机发送数据后接收从机应答</h4>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> <span class="title function_">myi2c_SendAck</span><span class="params">(<span class="type">void</span>)</span><span class="comment">//紧跟Send，因此刚开始SCL是低电平</span></span><br><span class="line">&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="type">uint8_t</span> AckBit;</span><br><span class="line">	SDA_SET;<span class="comment">//SDA控制权交给从机</span></span><br><span class="line">	SCL_SET;</span><br><span class="line">	AckBit=SDA_READ;</span><br><span class="line">	</span><br><span class="line">	SCL_CLR;</span><br><span class="line">			</span><br><span class="line">	<span class="keyword">return</span> AckBit;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上便是软件i2c实现基本时序单元，将几者进行拼接，便可得到完整时序</p>
+<p>程序测试：我们在相应引脚上接上MPU6050,他的从机地址是0xD0</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*	myi2c_Init();</span></span><br><span class="line"><span class="comment">	myi2c_Start();</span></span><br><span class="line"><span class="comment">	myi2c_Send(0xD0);</span></span><br><span class="line"><span class="comment">	uint8_t Ack= myi2c_SendAck();</span></span><br><span class="line"><span class="comment">	OLED_ShowHexNum(1,4,Ack,2);</span></span><br><span class="line"><span class="comment">	用于测试I2C编写是否正确，向0XD0从机地址发送数据，看是否得到回应  */</span></span><br></pre></td></tr></table></figure>
+<p>OLED屏上显示00，说明得到回应，I2C函数编写无误</p>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1th411z7sn?p=31&amp;vd_source=2fe640bda6829f493f3f981af9ae9185"> I2C通信协议</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1th411z7sn?p=34&amp;vd_source=2fe640bda6829f493f3f981af9ae9185">I2C通信外设</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        <a href="/tags/%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE/"># 通信协议</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+                <a class="prev" rel="prev" href="/2024/08/07/STM32-learn-5/">MPU6050学习</a>
+            
+            
+            <a class="next" rel="next" href="/2024/08/07/STM32-learn-3/">USART串口通信学习</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>MPU6050学习 | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">MPU6050学习</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">August 7, 2024&nbsp;&nbsp;22:34:24</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/STM32%E5%AD%A6%E4%B9%A0/">STM32学习</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>MPU6050学习（IIC协议）</h1>
+<h2 id="简介">简介</h2>
+<p><img src="/2024/08/07/STM32-learn-5/1.png" alt="1"></p>
+<p><img src="/2024/08/07/STM32-learn-5/2.png" alt="2"></p>
+<blockquote>
+<p>满量程范围：意思是16位AD值达到最大时，对应的物理参量具体是多少,满量程选的越小，测量就会越细腻，有点像分辨率，而且AD值和数值他们是线性关系</p>
+<p>加速度计量程单位是g</p>
+<p>I2C从机地址是可以更改的，从AD0引脚调整</p>
+<p>这里既可以说I2C的从机地址是0x68(直接读取),也可以说I2C的从机地址是0xD0(融合读写位)</p>
+</blockquote>
+<p><img src="/2024/08/07/STM32-learn-5/3.png" alt="3"></p>
+<ul>
+<li>这里可以看到SDA和SCL已经内置了上拉电阻了，因此我们接线时直接把他们接到GPIO口就可以了，不要外接上拉电阻了，XCL,XDA为扩展引脚，通常用于外接磁力计或者气压计，MPU6050内部有DMP单元进行姿态解算，可以节省主机算法资源</li>
+<li>INT引脚用于进行中断信号的配置，详情仔细看手册</li>
+<li>左上角加了一个3.3v稳压器，这样我们的输入电压就可以接3.3v-5v了</li>
+</ul>
+<hr>
+<h2 id="代码编写">代码编写</h2>
+<p>我们用STM32标准库来驱动这个芯片，读出MPU6050的X,Y,Z轴加速度与角速度，并且读出温度<br>
+首先我们需要些I2C底层函数作为驱动层，详情请看我的上一篇博客笔记<a href>I2C协议学习</a></p>
+<h3 id="1-初始化MPU6050代码">1. 初始化MPU6050代码</h3>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">define</span> MPU6050_ADDRESS  0xD0   <span class="comment">//从机地址</span></span></span><br><span class="line"><span class="comment">//#define MPU6050_ADDRESS  0xD1  A0口接高电平时</span></span><br><span class="line"><span class="meta">#<span class="keyword">ifndef</span> __MPU6050_REG_H</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> __MPU6050_REG_H</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_SMPLRT_DIV		0x19</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_CONFIG			0x1A</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_CONFIG		0x1B</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_CONFIG	0x1C</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_XOUT_H	0x3B</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_XOUT_L	0x3C</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_YOUT_H	0x3D</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_YOUT_L	0x3E</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_ZOUT_H	0x3F</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_ACCEL_ZOUT_L	0x40</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_TEMP_OUT_H		0x41</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_TEMP_OUT_L		0x42</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_XOUT_H		0x43</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_XOUT_L		0x44</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_YOUT_H		0x45</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_YOUT_L		0x46</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_ZOUT_H		0x47</span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_GYRO_ZOUT_L		0x48</span></span><br><span class="line"><span class="comment">//这几个是最核心的函数，从上到下依次是XYZ的加速度，温度，XYZ的角速度，每一个数据都是高八位和低八位合起来一共十六位</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_PWR_MGMT_1		0x6B  <span class="comment">//电源管理器1</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_PWR_MGMT_2		0x6C  <span class="comment">//电源管理器2</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span>	MPU6050_WHO_AM_I		0x75  <span class="comment">//ID寄存器</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+<p>需要对手册进行了解即可，进行初始化配置</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">MPU6050_Init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	myi2c_Init();</span><br><span class="line">	MPU6050_WriteReg(MPU6050_PWR_MGMT_1,<span class="number">0x00</span>);<span class="comment">//配置电源管理寄存器1进行使能，选择陀螺仪时钟</span></span><br><span class="line">	MPU6050_WriteReg(MPU6050_PWR_MGMT_2,<span class="number">0x00</span>);<span class="comment">//配置电源管理寄存器2取消待机</span></span><br><span class="line">	MPU6050_WriteReg(MPU6050_SMPLRT_DIV,<span class="number">0x09</span>);<span class="comment">//配置分频系数</span></span><br><span class="line">	MPU6050_WriteReg(MPU6050_CONFIG,<span class="number">0x06</span>);		<span class="comment">//配置滤波器系数为110</span></span><br><span class="line">	MPU6050_WriteReg(MPU6050_GYRO_CONFIG, <span class="number">0x18</span>);	<span class="comment">//陀螺仪配置寄存器，选择满量程为±2000°/s</span></span><br><span class="line">	MPU6050_WriteReg(MPU6050_ACCEL_CONFIG, <span class="number">0x18</span>);	<span class="comment">//加速度计配置寄存器，选择满量程为±16g</span></span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-给指定寄存器发送数据">2. 给指定寄存器发送数据</h3>
+<p>可以看到，我们需要指定寄存器写这个代码，这在我们上一篇笔记中也说过，我们只需要将单元时序拼接即可：开始时序–&gt;发送第一个字节（寻找从机）–&gt;接收从机响应–&gt;发送第二个字节（寻找寄存器）–&gt;接收从机响应–&gt;寻找寄存器–&gt;发送第三字节（给相应寄存器发送数据）–&gt;接收从机响应–&gt;结束时序</p>
+<blockquote>
+<p>其中我们还可以对从机的响应进行处理，我们这里不作处理，但是必须要有接收这一步来保证时序是完整的</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">MPU6050_WriteReg</span><span class="params">(<span class="type">uint8_t</span> RegAddress,<span class="type">uint8_t</span> Data)</span><span class="comment">//指定寄存器地址写</span></span><br><span class="line">&#123;</span><br><span class="line">	myi2c_Start();</span><br><span class="line">	myi2c_Send(MPU6050_ADDRESS);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	myi2c_Send(RegAddress);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	myi2c_Send(Data);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	myi2c_Stop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-指定寄存器读取数据">3.指定寄存器读取数据</h3>
+<p>从上节我们知道，指定寄存器读需要先通过指定寄存器写来寻找到寄存器，开始时序–&gt;发送第一个字节（寻找从机）–&gt;接收从机响应–&gt;发送第二个字节（寻找寄存器）–&gt;接收从机响应–&gt;重新开始时序–&gt;主机发送读取数据请求–&gt;主机读取数据–&gt;主机给从机响应1（表示不要再发数据了）–&gt;结束时序</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span> <span class="title function_">MPU6050_ReadReg</span><span class="params">(<span class="type">uint8_t</span> RegAddress)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> Data;</span><br><span class="line">	myi2c_Start();</span><br><span class="line">	myi2c_Send(MPU6050_ADDRESS);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	myi2c_Send(RegAddress);</span><br><span class="line">	myi2c_SendAck();   <span class="comment">//设置了指针指向该寄存器地址</span></span><br><span class="line">	myi2c_Start();</span><br><span class="line">	myi2c_Send(MPU6050_ADDRESS + <span class="number">0x01</span>);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	Data=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">1</span>);</span><br><span class="line">	myi2c_Stop();</span><br><span class="line">	<span class="keyword">return</span> Data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="4-获取数据并全部返回">4.获取数据并全部返回</h3>
+<p>由于我们这里想返回6个数据，因此可以考虑使用指针，这样就能返回多个值,将高八位左移再与低八位相与或者相加即可得到数据</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">MPU6050_GetData</span><span class="params">(<span class="type">int16_t</span> *AccX,<span class="type">int16_t</span> *AccY,<span class="type">int16_t</span> *AccZ,</span></span><br><span class="line"><span class="params">					<span class="type">int16_t</span> *GyroX,<span class="type">int16_t</span> *GyroY,<span class="type">int16_t</span> *GyroZ)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> DataH,DataL;</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_ACCEL_XOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_ACCEL_XOUT_L);</span><br><span class="line">	*AccX=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_ACCEL_YOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_ACCEL_YOUT_L);</span><br><span class="line">	*AccY=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_ACCEL_ZOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_ACCEL_ZOUT_L);</span><br><span class="line">	*AccZ=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_GYRO_XOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_GYRO_XOUT_L);</span><br><span class="line">	*GyroX=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_GYRO_YOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_GYRO_YOUT_L);</span><br><span class="line">	*GyroY=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	DataH=MPU6050_ReadReg(MPU6050_GYRO_ZOUT_H);</span><br><span class="line">	DataL=MPU6050_ReadReg(MPU6050_GYRO_ZOUT_L);</span><br><span class="line">	*GyroZ=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="进阶写法">进阶写法</h2>
+<h3 id="我们注意到，加速度XYZ-温度-角速度XYZ这14个数据的寄存器是紧挨着的，因此我们就可以利用上个博客说的指针自加特性一次性读完所有数据，并且返回所有值">我们注意到，加速度XYZ,温度,角速度XYZ这14个数据的寄存器是紧挨着的，因此我们就可以利用上个博客说的指针自加特性一次性读完所有数据，并且返回所有值\</h3>
+<ol>
+<li>读取所有数据，并把它们存储在一个静态（全局）数组中，并且用指针类型返回数组的第一位，我们这里函数只要传入第一个寄存器的地址就可以了</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">uint8_t</span>* <span class="title function_">MPU6050_ReadRegmore</span><span class="params">(<span class="type">uint8_t</span> RegAddress)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">uint8_t</span> Data[<span class="number">14</span>];</span><br><span class="line">	myi2c_Start();</span><br><span class="line">	myi2c_Send(MPU6050_ADDRESS);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	myi2c_Send(RegAddress);</span><br><span class="line">	myi2c_SendAck();   <span class="comment">//设置了指针指向该寄存器地址</span></span><br><span class="line">	myi2c_Start();</span><br><span class="line">	myi2c_Send(MPU6050_ADDRESS + <span class="number">0x01</span>);</span><br><span class="line">	myi2c_SendAck();</span><br><span class="line">	Data[<span class="number">0</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">1</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">2</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">3</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">4</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">5</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">6</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">7</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">8</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">9</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">10</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">11</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">12</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">0</span>);</span><br><span class="line">	Data[<span class="number">13</span>]=myi2c_Receive();</span><br><span class="line">	myi2c_ReceiveAck(<span class="number">1</span>);</span><br><span class="line">	myi2c_Stop();</span><br><span class="line">	<span class="keyword">return</span> Data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>可以看到，我们让主机回复0，表示还想要数据，在最后才给1表示不要数据了最后用指针来返回</p>
+</blockquote>
+<ol start="2">
+<li>获取所有数据，用指针的方式返回多个值</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span>  <span class="title function_">MPU6050_GetData2</span><span class="params">(<span class="type">int16_t</span> *AccX,<span class="type">int16_t</span> *AccY,<span class="type">int16_t</span> *AccZ,</span></span><br><span class="line"><span class="params">					<span class="type">int16_t</span> *GyroX,<span class="type">int16_t</span> *GyroY,<span class="type">int16_t</span> *GyroZ,<span class="type">int16_t</span> *temp)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> DataH,DataL;</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">0</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">1</span>];</span><br><span class="line">	*AccX=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">2</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">3</span>];</span><br><span class="line">	*AccY=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">4</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">5</span>];</span><br><span class="line">	*AccZ=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">6</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">7</span>];</span><br><span class="line">	*temp=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">8</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">9</span>];</span><br><span class="line">	*GyroX=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">10</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">11</span>];</span><br><span class="line">	*GyroY=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	DataH=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">12</span>];</span><br><span class="line">	DataL=MPU6050_ReadRegmore(MPU6050_ACCEL_XOUT_H)[<span class="number">13</span>];</span><br><span class="line">	*GyroZ=(DataH&lt;&lt;<span class="number">8</span>)+DataL;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV17z421f78T/?spm_id_from=333.337.search-card.all.click&amp;vd_source=2fe640bda6829f493f3f981af9ae9185">小学生都会的MPU6050DMP库移植(stm32标准库)</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1th411z7sn/?p=33&amp;spm_id_from=pageDriver&amp;vd_source=2fe640bda6829f493f3f981af9ae9185"> 软件I2C读写MPU6050</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/STM32/"># STM32</a>
+                    
+                        <a href="/tags/%E5%B8%B8%E7%94%A8%E5%A4%96%E8%AE%BE/"># 常用外设</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/08/07/STM32-learn-4/">I2C协议学习</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>
