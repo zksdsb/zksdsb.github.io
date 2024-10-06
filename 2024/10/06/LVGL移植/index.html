@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="author" content="D调小硕">
+
+
+    <meta name="subtitle" content="BLOG">
+
+
+
+
+<title>LVGL移植 | D调小硕的博客</title>
+
+
+
+    <link rel="icon" href="/favicon.ico">
+
+
+
+
+    <!-- stylesheets list from _config.yml -->
+    
+    <link rel="stylesheet" href="/css/style.css">
+    
+
+
+
+    <!-- scripts list from _config.yml -->
+    
+    <script src="/js/script.js"></script>
+    
+    <script src="/js/tocbot.min.js"></script>
+    
+
+
+
+    
+    
+        
+    
+
+
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+    <script>
+        // this function is used to check current theme before page loaded.
+        (() => {
+            const currentTheme = window.localStorage && window.localStorage.getItem('theme') || '';
+            const isDark = currentTheme === 'dark';
+            const pagebody = document.getElementsByTagName('body')[0]
+            if (isDark) {
+                pagebody.classList.add('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Dark"
+            } else {
+                pagebody.classList.remove('dark-theme');
+                // mobile
+                document.getElementById("mobile-toggle-theme").innerText = "· Light"
+            }
+        })();
+    </script>
+
+    <div class="wrapper">
+        <header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-header header-logo"><a href="/">DSBZKS&#39;s Blog</a></div>
+            <div class="menu navbar-right">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+                <input id="switch_default" type="checkbox" class="switch_default">
+                <label for="switch_default" class="toggleBtn"></label>
+            </div>
+        </div>
+    </nav>
+
+    
+    <nav class="navbar-mobile" id="nav-mobile">
+        <div class="container">
+            <div class="navbar-header">
+                <div>
+                    <a href="/">DSBZKS&#39;s Blog</a><a id="mobile-toggle-theme">·&nbsp;Light</a>
+                </div>
+                <div class="menu-toggle" onclick="mobileBtn()">&#9776; Menu</div>
+            </div>
+            <div class="menu" id="mobile-menu">
+                
+                    <a class="menu-item" href="/archives">Posts</a>
+                
+                    <a class="menu-item" href="/category">Categories</a>
+                
+                    <a class="menu-item" href="/tag">Tags</a>
+                
+                    <a class="menu-item" href="/about">About</a>
+                
+            </div>
+        </div>
+    </nav>
+
+</header>
+<script>
+    var mobileBtn = function f() {
+        var toggleMenu = document.getElementsByClassName("menu-toggle")[0];
+        var mobileMenu = document.getElementById("mobile-menu");
+        if(toggleMenu.classList.contains("active")){
+           toggleMenu.classList.remove("active")
+            mobileMenu.classList.remove("active")
+        }else{
+            toggleMenu.classList.add("active")
+            mobileMenu.classList.add("active")
+        }
+    }
+</script>
+            <div class="main">
+                <div class="container">
+    
+    
+        <div class="post-toc">
+    <div class="tocbot-list">
+    </div>
+    <div class="tocbot-list-menu">
+        <a class="tocbot-toc-expand" onclick="expand_toc()">Expand all</a>
+        <a onclick="go_top()">Back to top</a>
+        <a onclick="go_bottom()">Go to bottom</a>
+    </div>
+</div>
+
+<script>
+    document.ready(
+        function () {
+            tocbot.init({
+                tocSelector: '.tocbot-list',
+                contentSelector: '.post-content',
+                headingSelector: 'h1, h2, h3, h4, h5',
+                collapseDepth: 1,
+                orderedList: false,
+                scrollSmooth: true,
+            })
+        }
+    )
+
+    function expand_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 6,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "collapse_toc()");
+        b.innerHTML = "Collapse all"
+    }
+
+    function collapse_toc() {
+        var b = document.querySelector(".tocbot-toc-expand");
+        tocbot.init({
+            tocSelector: '.tocbot-list',
+            contentSelector: '.post-content',
+            headingSelector: 'h1, h2, h3, h4, h5',
+            collapseDepth: 1,
+            orderedList: false,
+            scrollSmooth: true,
+        });
+        b.setAttribute("onclick", "expand_toc()");
+        b.innerHTML = "Expand all"
+    }
+
+    function go_top() {
+        window.scrollTo(0, 0);
+    }
+
+    function go_bottom() {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+</script>
+    
+
+    
+    <article class="post-wrap">
+        <header class="post-header">
+            <h1 class="post-title">LVGL移植</h1>
+            
+                <div class="post-meta">
+                    
+                        Author: <a itemprop="author" rel="author" href="/">D调小硕</a>
+                    
+
+                    
+                        <span class="post-time">
+                        Date: <a href="#">October 6, 2024&nbsp;&nbsp;22:55:27</a>
+                        </span>
+                    
+                    
+                        <span class="post-category">
+                    Category:
+                            
+                                <a href="/categories/LVGL%E5%AD%A6%E4%B9%A0/">LVGL学习</a>
+                            
+                        </span>
+                    
+                </div>
+            
+        </header>
+
+        <div class="post-content">
+            <h1>LVGL移植</h1>
+<h2 id="关键点">关键点</h2>
+<p>需要为输出和输入提供接口：也就是基本函数</p>
+<p><img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/1.png" alt="1"></p>
+<p>进阶：系统和内存管理<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/2.png" alt="2"></p>
+<h2 id="移植文件">移植文件</h2>
+<ol>
+<li>
+<p>移植前需要这些源码：<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/3.png" alt="3"></p>
+</li>
+<li>
+<p>简化LVGL库文件（上一个教程已经讲过）</p>
+</li>
+<li>
+<p>修改配置文件名称，删除<code>_template</code><br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/4.png" alt="4"></p>
+</li>
+<li>
+<p>打开配置文件，把0改为1进行使能<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/5.png" alt="5"></p>
+</li>
+<li>
+<p>以触摸屏工程为基础文件夹，将定时器文件加入<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/6.png" alt="6"></p>
+</li>
+<li>
+<p><img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/7.png" alt="7"></p>
+</li>
+<li>
+<p>把裁剪后的lvgl库函数文件放到这个文件夹里<code>LVGL移植实验\Middlewares\LVGL\GUI\lvgl</code></p>
+</li>
+<li>
+<p>将demo文件放到GUI_APP这个文件夹里，方便测试</p>
+</li>
+<li>
+<p>打开工程，先编译一次，看看原工程有没有问题</p>
+</li>
+<li>
+<p>在keil文件管理中添加这些路径<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/8.png" alt="8"></p>
+</li>
+<li>
+<p>接下来这步很繁琐，主意子文件夹下的c也要添加<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/9.png" alt="9"></p>
+</li>
+<li>
+<p>之后是添加头文件路径，配置编译器<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/10.png" alt="10"></p>
+</li>
+<li>
+<p>再次进行编译，发现会有30个warning，不用在意，一般是数据类型的原因<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/11.png" alt="11"></p>
+</li>
+</ol>
+<h2 id="配置输出（即显示）">配置输出（即显示）</h2>
+<ol>
+<li>把<code>lv_port_disp_template.h/c</code>文件中的0改为1</li>
+<li>在.c文件中加入显示函数的头文件<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/12.png" alt="12"></li>
+<li>在.c文件内disp——init函数中添加自己原来显示屏初始化函数<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/13.png" alt="13"></li>
+<li>配置图形缓存模式：这里一共有三种缓存模式，第一种就是缓存每一行刷新，第二种是双缓存，<br>
+第三种是全屏缓存对我们的芯片缓存要求高，我们这里选择第一种，注意宏定义需要改成我们屏幕一行的像素点个数<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/14.png" alt="14"></li>
+<li>设置长宽<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/15.png" alt="15"></li>
+<li>配置打点函数，注意这里的打点函数参数必须从声明函数参数中获取或者一致<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/16.png" alt="16"></li>
+</ol>
+<h2 id="配置输入（即操控）">配置输入（即操控）</h2>
+<ol>
+<li>
+<p>把<code>lv_port_indev_template.h/c</code>文件中的0改为1</p>
+</li>
+<li>
+<p>裁剪输入设备<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/17.png" alt="17"></p>
+</li>
+<li>
+<p>包含touch头文件<br>
+<img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/18.png" alt="18"></p>
+</li>
+<li>
+<p>配置初始化函数</p>
+</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">touchpad_init</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	tp_dev.init();</span><br><span class="line">    <span class="comment">/*Your code comes here*/</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="5">
+<li>配置触摸读取函数</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">bool</span> <span class="title function_">touchpad_is_pressed</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	tp_dev.scan(<span class="number">0</span>);</span><br><span class="line">    <span class="comment">/*Your code comes here*/</span></span><br><span class="line">	<span class="keyword">if</span>(tp_dev.sta &amp; TP_PRES_DOWN)</span><br><span class="line">	&#123;</span><br><span class="line">	    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	&#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="6">
+<li>配置触摸位置读取函数</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="type">void</span> <span class="title function_">touchpad_get_xy</span><span class="params">(<span class="type">lv_coord_t</span> * x, <span class="type">lv_coord_t</span> * y)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">/*Your code comes here*/</span></span><br><span class="line"></span><br><span class="line">    (*x) = tp_dev.x[<span class="number">0</span>];</span><br><span class="line">    (*y) = tp_dev.y[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>这里的函数原型都是使用的正点原子触摸屏实验示例</p>
+</blockquote>
+<h2 id="配置心跳（即时钟）">配置心跳（即时钟）</h2>
+<ol>
+<li>添加定时器驱动，这里不再赘述</li>
+<li>在定时器驱动.c文件中<code>#include &quot;lvgl.h&quot;</code></li>
+<li>在定时器中断函数中<code>lv_tick_inc(1);</code></li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">void</span> <span class="title function_">TIM3_IRQHandler</span><span class="params">(<span class="type">void</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">if</span>(TIM_GetITStatus(TIM3,TIM_IT_Update)==SET) <span class="comment">//溢出中断</span></span><br><span class="line">	&#123;</span><br><span class="line">		lv_tick_inc(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  <span class="comment">//清除中断标志位</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>初始化并且启动定时器，需要保证进入中断的间隔为x毫秒</li>
+</ol>
+<h2 id="最终移植，在main中调用">最终移植，在main中调用</h2>
+<ol>
+<li>添加头文件</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lvgl.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lv_port_disp_template.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;lv_port_indev_template.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;timer.h&quot;</span></span></span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>初始化定时器</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TIM3_Int_Init(<span class="number">10</span><span class="number">-1</span>,<span class="number">8400</span><span class="number">-1</span>);<span class="comment">//让这里是1ms 1中断</span></span><br><span class="line">	lv_init();</span><br><span class="line">	lv_port_disp_init();</span><br><span class="line">	lv_port_indev_init();</span><br><span class="line">	</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<ol start="3">
+<li>调用事务处理函数</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">	   delay_ms(<span class="number">5</span>);</span><br><span class="line">		lv_timer_handler();</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<ol start="4">
+<li>配置一个简单的ui界面</li>
+</ol>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">lv_obj_t</span>* switch_obj=lv_switch_create(lv_scr_act());</span><br><span class="line">lv_obj_set_size(switch_obj,<span class="number">120</span>,<span class="number">60</span>);</span><br><span class="line">lv_obj_align(switch_obj,LV_ALIGN_CENTER,<span class="number">0</span>,<span class="number">0</span>);</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="最后进行烧录，看到一个按钮即成功">最后进行烧录，看到一个按钮即成功</h2>
+<p><img src="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/19.png" alt="19"></p>
+<h2 id="参考资料">参考资料</h2>
+<p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1CG4y157Px?p=7&amp;vd_source=2fe640bda6829f493f3f981af9ae9185">正点原子LVGL教学</a><br>
+<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_41289609/article/details/106081261">解决定时器编译报错的问题</a></p>
+
+        </div>
+
+        
+            <section class="post-copyright">
+                
+                    <p class="copyright-item">
+                        <span>Author:</span>
+                        <span>D调小硕</span>
+                    </p>
+                
+                
+                
+                
+                     <p class="copyright-item">
+                         <span>Slogan:</span>
+                         <span>欢愉且胜意，万事皆可期。</span>
+                     </p>
+                
+
+            </section>
+        
+        <section class="post-tags">
+            <div>
+                <span>Tag(s):</span>
+                <span class="tag">
+                    
+                    
+                        <a href="/tags/LVGL/"># LVGL</a>
+                    
+                        
+                </span>
+            </div>
+            <div>
+                <a href="javascript:window.history.back();">back</a>
+                <span>· </span>
+                <a href="/">home</a>
+            </div>
+        </section>
+        <section class="post-nav">
+            
+            
+            <a class="next" rel="next" href="/2024/10/06/LVGL%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">LVGL基本概念</a>
+            
+        </section>
+
+
+    </article>
+</div>
+
+            </div>
+            <footer id="footer" class="footer">
+    <div class="copyright">
+        <span>© D调小硕 | Powered by <a href="https://hexo.io" target="_blank">Hexo</a> & <a href="https://github.com/Siricee/hexo-theme-Chic" target="_blank">Chic</a></span>
+    </div>
+</footer>
+
+    </div>
+</body>
+
+</html>

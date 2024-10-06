@@ -15,7 +15,7 @@
 
 
 
-<title>ESP32外部中断 | D调小硕的博客</title>
+<title>LVGL基本概念 | D调小硕的博客</title>
 
 
 
@@ -195,7 +195,7 @@
     
     <article class="post-wrap">
         <header class="post-header">
-            <h1 class="post-title">ESP32外部中断</h1>
+            <h1 class="post-title">LVGL基本概念</h1>
             
                 <div class="post-meta">
                     
@@ -204,14 +204,14 @@
 
                     
                         <span class="post-time">
-                        Date: <a href="#">October 6, 2024&nbsp;&nbsp;22:51:23</a>
+                        Date: <a href="#">October 6, 2024&nbsp;&nbsp;22:55:12</a>
                         </span>
                     
                     
                         <span class="post-category">
                     Category:
                             
-                                <a href="/categories/ESP32%E5%AD%A6%E4%B9%A0/">ESP32学习</a>
+                                <a href="/categories/LVGL%E5%AD%A6%E4%B9%A0/">LVGL学习</a>
                             
                         </span>
                     
@@ -220,51 +220,40 @@
         </header>
 
         <div class="post-content">
-            <h1>ESP32外部中断</h1>
-<p>在 ESP32 上配置外部中断，使用 Arduino IDE 编写代码，可以使用 <code>attachInterrupt</code> 函数来实现。ESP32 支持多个外部中断，并且可以通过不同的 GPIO 引脚配置外部中断。以下是如何在 ESP32 上配置外部中断的步骤及示例代码：</p>
-<h3 id="步骤">步骤</h3>
+            <h1>LVGL基本概念</h1>
+<h2 id="移植要求（V8版本）">移植要求（V8版本）</h2>
+<ul>
+<li>16、32、64位的微控制器或者处理器</li>
+<li>主控频率：大于16Mhz</li>
+<li>Flash/ROM:大于64kb，建议180kb以上</li>
+<li>RAM：大于8kb，建议24kb以上</li>
+<li>图形缓冲区：大于水平分辨率像素，建议大于1/10屏幕总像素</li>
+<li>C99或者是更新版本的编译器</li>
+</ul>
+<h3 id="优化方法">优化方法</h3>
 <ol>
-<li><strong>选择一个 GPIO 引脚</strong>： ESP32 支持大多数 GPIO 引脚用作外部中断。查阅 ESP32 的引脚图，确认你想要使用的 GPIO 引脚是否可以用作中断。</li>
-<li><strong>定义中断服务例程（ISR）</strong>： 编写一个 ISR 函数，当外部中断触发时该函数将被调用。</li>
-<li><strong>配置中断</strong>： 使用 <code>attachInterrupt</code> 函数配置中断源、触发条件和 ISR。</li>
+<li>提高主频</li>
+<li>增大SRAM容量、提高读写速度</li>
+<li>增大图形缓冲区、使用双缓冲</li>
+<li>减小需要刷新的总像素</li>
+<li>提高图像数据的传输速度(DMA2D)</li>
 </ol>
-<h3 id="示例代码">示例代码</h3>
-<p>以下示例展示了如何在 ESP32 上使用 Arduino IDE 配置外部中断。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">cppCopy Code// 定义中断引脚和中断触发条件</span><br><span class="line">const int interruptPin = 2; // 使用 GPIO2 作为中断引脚</span><br><span class="line">volatile bool interruptFlag = false; // 中断标志</span><br><span class="line"></span><br><span class="line">// 中断服务例程</span><br><span class="line">void IRAM_ATTR handleInterrupt() &#123;</span><br><span class="line">  interruptFlag = true; // 设置中断标志</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void setup() &#123;</span><br><span class="line">  // 初始化串口</span><br><span class="line">  Serial.begin(115200);</span><br><span class="line">  </span><br><span class="line">  // 设置中断引脚为输入</span><br><span class="line">  pinMode(interruptPin, INPUT);</span><br><span class="line">  </span><br><span class="line">  // 配置中断，触发条件为上升沿</span><br><span class="line">  attachInterrupt(digitalPinToInterrupt(interruptPin), handleInterrupt, RISING);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void loop() &#123;</span><br><span class="line">  if (interruptFlag) &#123;</span><br><span class="line">    // 中断发生时执行的代码</span><br><span class="line">    Serial.println(&quot;Interrupt triggered!&quot;);</span><br><span class="line">    interruptFlag = false; // 清除中断标志</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  // 主循环代码</span><br><span class="line">  delay(1000);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="代码解释">代码解释</h3>
-<ol>
-<li>
-<p><strong>定义中断引脚</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cppCopy Codeconst int interruptPin = 2; // 设置 GPIO2 为中断引脚</span><br></pre></td></tr></table></figure>
-</li>
-<li>
-<p><strong>中断服务例程（ISR）</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cppCopy Codevoid IRAM_ATTR handleInterrupt() &#123;</span><br><span class="line">  interruptFlag = true; // 设置中断标志</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>关键点：缩短图像刷新的时间</p>
+</blockquote>
+<hr>
+<h2 id="资料获取">资料获取</h2>
 <ul>
-<li><code>IRAM_ATTR</code> 用于确保 ISR 被放置在 IRAM（指令 RAM）中，这样可以更快地执行，并避免中断触发时的延迟。</li>
+<li>途径1：LVGL官网：<a target="_blank" rel="noopener" href="http://lvgl.io">http://lvgl.io</a></li>
+<li>途径2：github：<a target="_blank" rel="noopener" href="https://github.com/lvgl/lvgl">https://github.com/lvgl/lvgl</a></li>
 </ul>
-</li>
-<li>
-<p><strong>配置中断</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cppCopy CodeattachInterrupt(digitalPinToInterrupt(interruptPin), handleInterrupt, RISING);</span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>digitalPinToInterrupt(interruptPin)</code> 将 GPIO 引脚转换为中断编号。</li>
-<li><code>handleInterrupt</code> 是中断服务例程。</li>
-<li><code>RISING</code> 指中断触发条件为上升沿。可以使用 <code>FALLING</code>（下降沿）、<code>CHANGE</code>（变化）或 <code>HIGH</code>（高电平）作为触发条件。</li>
-</ul>
-</li>
-<li>
-<p><strong>处理中断标志</strong>：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cppCopy Codeif (interruptFlag) &#123;</span><br><span class="line">  Serial.println(&quot;Interrupt triggered!&quot;);</span><br><span class="line">  interruptFlag = false; // 清除中断标志</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h3 id="注意事项">注意事项</h3>
-<ul>
-<li><strong>ISR 中的代码要尽量简短和快速</strong>。避免使用 <code>delay()</code>、<code>Serial.print()</code> 等可能导致延迟的操作。</li>
-<li><strong>避免在 ISR 中使用复杂的操作</strong>。如果需要进行复杂的操作，可以在 ISR 中设置标志，然后在主循环中处理这些标志。</li>
-<li><strong>检查引脚功能</strong>。某些 GPIO 引脚在 ESP32 上有特殊功能或限制，因此确保选择正确的引脚以避免冲突。</li>
-</ul>
-<p>通过这些步骤，你就可以在 ESP32 上成功配置并使用外部中断。</p>
+<p><img src="/2024/10/06/LVGL%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/1.png" alt="1"></p>
+<p>简单说明：<br>
+<img src="/2024/10/06/LVGL%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/2.png" alt="2"></p>
+<h3 id="简化版本">简化版本</h3>
+<p><img src="/2024/10/06/LVGL%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/3.png" alt="3"></p>
+<p>example里只留下port即可<br>
+demo也可以删掉，如果没有需要的话</p>
 
         </div>
 
@@ -293,7 +282,7 @@
                 <span class="tag">
                     
                     
-                        <a href="/tags/ESP32/"># ESP32</a>
+                        <a href="/tags/LVGL/"># LVGL</a>
                     
                         
                 </span>
@@ -306,10 +295,10 @@
         </section>
         <section class="post-nav">
             
-                <a class="prev" rel="prev" href="/2024/10/06/LVGL%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">LVGL基本概念</a>
+                <a class="prev" rel="prev" href="/2024/10/06/LVGL%E7%A7%BB%E6%A4%8D/">LVGL移植</a>
             
             
-            <a class="next" rel="next" href="/2024/10/06/ESP32%E5%AE%9A%E6%97%B6%E5%99%A8%E4%B8%AD%E6%96%AD/">ESP32定时器中断</a>
+            <a class="next" rel="next" href="/2024/10/06/ESP32%E5%A4%96%E9%83%A8%E4%B8%AD%E6%96%AD/">ESP32外部中断</a>
             
         </section>
 
